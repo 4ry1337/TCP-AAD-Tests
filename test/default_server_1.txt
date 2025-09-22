@@ -1,0 +1,35 @@
+-----------------------------------------------------------
+Server listening on 5201 (test #1)
+-----------------------------------------------------------
+Accepted connection from 192.168.0.160, port 34264
+[  5] local 192.168.0.135 port 5201 connected to 192.168.0.160 port 34268
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-10.01  sec   372 MBytes   312 Mbits/sec                  
+[  5]  10.01-20.01  sec   292 MBytes   245 Mbits/sec                  
+[  5]  20.01-30.01  sec   327 MBytes   274 Mbits/sec                  
+[  5]  30.01-35.01  sec  33.6 MBytes  56.4 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-35.01  sec  1.00 GBytes   245 Mbits/sec                  receiver
+-----------------------------------------------------------
+Server listening on 5201 (test #2)
+-----------------------------------------------------------
+Accepted connection from 192.168.0.160, port 36818
+[  5] local 192.168.0.135 port 5201 connected to 192.168.0.160 port 36826
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-10.01  sec   385 MBytes   323 Mbits/sec                  
+[  5]  10.01-20.01  sec   396 MBytes   332 Mbits/sec                  
+[  5]  20.01-30.01  sec   396 MBytes   332 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-30.01  sec  1.15 GBytes   329 Mbits/sec                  receiver
+-----------------------------------------------------------
+Server listening on 5201 (test #3)
+-----------------------------------------------------------
+Accepted connection from 192.168.0.160, port 35234
+[  5] local 192.168.0.135 port 5201 connected to 192.168.0.160 port 35246
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-8.58   sec   308 MBytes   301 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-8.58   sec   308 MBytes   301 Mbits/sec                  receiver
