@@ -1,0 +1,71 @@
+Connecting to host 192.168.0.135, port 5201
+[  5] local 192.168.0.160 port 47454 connected to 192.168.0.135 port 5201
+[  7] local 192.168.0.160 port 47462 connected to 192.168.0.135 port 5201
+[  9] local 192.168.0.160 port 47474 connected to 192.168.0.135 port 5201
+[ 11] local 192.168.0.160 port 47488 connected to 192.168.0.135 port 5201
+[ 13] local 192.168.0.160 port 47494 connected to 192.168.0.135 port 5201
+[ 15] local 192.168.0.160 port 47506 connected to 192.168.0.135 port 5201
+[ 17] local 192.168.0.160 port 47520 connected to 192.168.0.135 port 5201
+[ 19] local 192.168.0.160 port 47524 connected to 192.168.0.135 port 5201
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  5]   0.00-5.01   sec  27.9 MBytes  46.7 Mbits/sec  199   41.0 KBytes       
+[  7]   0.00-5.01   sec  27.5 MBytes  46.1 Mbits/sec  138   90.5 KBytes       
+[  9]   0.00-5.01   sec  31.6 MBytes  53.0 Mbits/sec  189   50.9 KBytes       
+[ 11]   0.00-5.01   sec  43.8 MBytes  73.3 Mbits/sec  117   83.4 KBytes       
+[ 13]   0.00-5.01   sec  35.6 MBytes  59.7 Mbits/sec   98   93.3 KBytes       
+[ 15]   0.00-5.01   sec  35.0 MBytes  58.7 Mbits/sec  104    112 KBytes       
+[ 17]   0.00-5.01   sec  40.4 MBytes  67.7 Mbits/sec  210    130 KBytes       
+[ 19]   0.00-5.01   sec  28.0 MBytes  46.9 Mbits/sec  159   45.2 KBytes       
+[SUM]   0.00-5.01   sec   270 MBytes   452 Mbits/sec  1214             
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]   5.01-10.01  sec  34.9 MBytes  58.5 Mbits/sec   95   52.3 KBytes       
+[  7]   5.01-10.01  sec  32.0 MBytes  53.7 Mbits/sec   73   67.9 KBytes       
+[  9]   5.01-10.01  sec  37.2 MBytes  62.5 Mbits/sec   55   77.8 KBytes       
+[ 11]   5.01-10.01  sec  37.1 MBytes  62.3 Mbits/sec   85   39.6 KBytes       
+[ 13]   5.01-10.01  sec  39.1 MBytes  65.6 Mbits/sec   85   60.8 KBytes       
+[ 15]   5.01-10.01  sec  32.1 MBytes  53.9 Mbits/sec   79   80.6 KBytes       
+[ 17]   5.01-10.01  sec  34.1 MBytes  57.2 Mbits/sec   96   65.0 KBytes       
+[ 19]   5.01-10.01  sec  27.2 MBytes  45.7 Mbits/sec   66   62.2 KBytes       
+[SUM]   5.01-10.01  sec   274 MBytes   459 Mbits/sec  634             
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]  10.01-15.01  sec  29.8 MBytes  49.9 Mbits/sec   90   65.0 KBytes       
+[  7]  10.01-15.01  sec  35.5 MBytes  59.6 Mbits/sec   91   58.0 KBytes       
+[  9]  10.01-15.01  sec  32.6 MBytes  54.7 Mbits/sec   69    107 KBytes       
+[ 11]  10.01-15.01  sec  33.4 MBytes  56.0 Mbits/sec   50    105 KBytes       
+[ 13]  10.01-15.01  sec  28.5 MBytes  47.8 Mbits/sec   47    106 KBytes       
+[ 15]  10.01-15.01  sec  35.0 MBytes  58.7 Mbits/sec   72   80.6 KBytes       
+[ 17]  10.01-15.01  sec  25.8 MBytes  43.2 Mbits/sec   73   52.3 KBytes       
+[ 19]  10.01-15.01  sec  31.1 MBytes  52.2 Mbits/sec   62   97.6 KBytes       
+[SUM]  10.01-15.01  sec   252 MBytes   422 Mbits/sec  554             
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]  15.01-20.01  sec  23.0 MBytes  38.6 Mbits/sec   74   79.2 KBytes       
+[  7]  15.01-20.01  sec  24.8 MBytes  41.5 Mbits/sec   57   84.8 KBytes       
+[  9]  15.01-20.01  sec  33.2 MBytes  55.7 Mbits/sec   68   94.7 KBytes       
+[ 11]  15.01-20.01  sec  34.6 MBytes  58.0 Mbits/sec   53   93.3 KBytes       
+[ 13]  15.01-20.01  sec  25.9 MBytes  43.4 Mbits/sec   70   90.5 KBytes       
+[ 15]  15.01-20.01  sec  23.4 MBytes  39.2 Mbits/sec   67   72.1 KBytes       
+[ 17]  15.01-20.01  sec  20.9 MBytes  35.0 Mbits/sec   77   84.8 KBytes       
+[ 19]  15.01-20.01  sec  22.2 MBytes  37.3 Mbits/sec   70   91.9 KBytes       
+[SUM]  15.01-20.01  sec   208 MBytes   349 Mbits/sec  536             
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-20.01  sec   116 MBytes  48.4 Mbits/sec  458            sender
+[  5]   0.00-20.02  sec   115 MBytes  48.1 Mbits/sec                  receiver
+[  7]   0.00-20.01  sec   120 MBytes  50.2 Mbits/sec  359            sender
+[  7]   0.00-20.02  sec   119 MBytes  49.8 Mbits/sec                  receiver
+[  9]   0.00-20.01  sec   135 MBytes  56.5 Mbits/sec  381            sender
+[  9]   0.00-20.02  sec   134 MBytes  55.9 Mbits/sec                  receiver
+[ 11]   0.00-20.01  sec   149 MBytes  62.4 Mbits/sec  305            sender
+[ 11]   0.00-20.02  sec   148 MBytes  62.0 Mbits/sec                  receiver
+[ 13]   0.00-20.01  sec   129 MBytes  54.1 Mbits/sec  300            sender
+[ 13]   0.00-20.02  sec   128 MBytes  53.7 Mbits/sec                  receiver
+[ 15]   0.00-20.01  sec   126 MBytes  52.6 Mbits/sec  322            sender
+[ 15]   0.00-20.02  sec   125 MBytes  52.2 Mbits/sec                  receiver
+[ 17]   0.00-20.01  sec   121 MBytes  50.8 Mbits/sec  456            sender
+[ 17]   0.00-20.02  sec   120 MBytes  50.2 Mbits/sec                  receiver
+[ 19]   0.00-20.01  sec   109 MBytes  45.5 Mbits/sec  357            sender
+[ 19]   0.00-20.02  sec   108 MBytes  45.1 Mbits/sec                  receiver
+[SUM]   0.00-20.01  sec  1003 MBytes   421 Mbits/sec  2938             sender
+[SUM]   0.00-20.02  sec   996 MBytes   417 Mbits/sec                  receiver
+
+iperf Done.
