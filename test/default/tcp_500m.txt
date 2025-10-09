@@ -1,0 +1,12 @@
+Connecting to host 192.168.0.135, port 5201
+[  5] local 192.168.0.160 port 40984 connected to 192.168.0.135 port 5201
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  5]   0.00-5.00   sec   244 MBytes   409 Mbits/sec   82    349 KBytes       
+[  5]   5.00-10.00  sec   240 MBytes   403 Mbits/sec   24    329 KBytes       
+[  5]  10.00-15.00  sec  16.1 MBytes  27.1 Mbits/sec    0    372 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-15.00  sec   500 MBytes   280 Mbits/sec  106            sender
+[  5]   0.00-15.01  sec   500 MBytes   279 Mbits/sec                  receiver
+
+iperf Done.
