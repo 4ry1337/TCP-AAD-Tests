@@ -161,6 +161,3 @@ Accepted connection from 192.168.0.160, port 41138
 - - - - - - - - - - - - - - - - - - - - - - - - -
 [ ID] Interval           Transfer     Bitrate         Retr
 [  5]   0.00-60.03  sec  2.86 GBytes   409 Mbits/sec  1120            sender
------------------------------------------------------------
-Server listening on 5201 (test #9)
------------------------------------------------------------
