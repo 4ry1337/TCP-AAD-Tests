@@ -1,0 +1,25 @@
+-----------------------------------------------------------
+Server listening on 5201 (test #1)
+-----------------------------------------------------------
+Accepted connection from 192.168.1.243, port 33712
+[  5] local 192.168.1.165 port 5201 connected to 192.168.1.243 port 33714
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-5.00   sec  10.1 MBytes  17.0 Mbits/sec                  
+[  5]   5.00-10.00  sec  10.1 MBytes  17.0 Mbits/sec                  
+[  5]  10.00-15.01  sec  10.0 MBytes  16.8 Mbits/sec                  
+[  5]  15.01-20.01  sec  10.1 MBytes  17.0 Mbits/sec                  
+[  5]  20.01-25.00  sec  10.6 MBytes  17.8 Mbits/sec                  
+[  5]  25.00-30.00  sec  10.6 MBytes  17.8 Mbits/sec                  
+[  5]  30.00-35.01  sec  10.6 MBytes  17.8 Mbits/sec                  
+[  5]  35.01-40.01  sec  10.6 MBytes  17.8 Mbits/sec                  
+[  5]  40.01-45.01  sec  10.6 MBytes  17.8 Mbits/sec                  
+[  5]  45.01-50.01  sec  10.1 MBytes  17.0 Mbits/sec                  
+[  5]  50.01-55.01  sec  5.75 MBytes  9.65 Mbits/sec                  
+[  5]  55.01-60.01  sec  9.75 MBytes  16.4 Mbits/sec                  
+[  5]  60.01-60.07  sec   128 KBytes  16.9 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-60.07  sec   119 MBytes  16.7 Mbits/sec                  receiver
+-----------------------------------------------------------
+Server listening on 5201 (test #2)
+-----------------------------------------------------------
