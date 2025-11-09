@@ -1,0 +1,35 @@
+# Experiment Results
+results/tcpaad/raw/*.json
+results/default/raw/*.json
+results/tcpaad/metadata/*.json
+results/default/metadata/*.json
+results/logs/*.log
+results/*.csv
+results/plots/*.png
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv
+
+# Jupyter
+.ipynb_checkpoints
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Keep directory structure
+!results/tcpaad/raw/.gitkeep
+!results/tcpaad/metadata/.gitkeep
+!results/default/raw/.gitkeep
+!results/default/metadata/.gitkeep
+!results/logs/.gitkeep
