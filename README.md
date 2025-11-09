@@ -1,5 +1,16 @@
 # Experiments with TCP over Wi-Fi
 
+Supervisor: Shinnazar Seytnazarov
+
+Type of project:
+- [x] Research and Development
+- [ ] System Development
+
+Topic: Experiments with TCP over Wi-Fi
+
+Team:
+- Rakhat Yskak
+
 ## Overview
 TCP is the most widely used transport-layer protocol due to its completeness. It
 provides reliability, congestion control and flow control services. For example,
