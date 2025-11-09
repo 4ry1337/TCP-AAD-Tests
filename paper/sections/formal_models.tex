@@ -1,0 +1,311 @@
+\section{Formal Models}
+
+We created three Promela models of increasing complexity to verify TCP acknowledgment behavior: a baseline model with immediate ACKs, the standard RFC 1122 delayed ACK, and TCP-AAD with adaptive timeouts.
+
+\subsection{TCP Basic Model}
+
+\subsubsection{Purpose}
+
+The \texttt{tcp\_basic.pml} model serves as a baseline to validate our modeling approach. It implements simple sender-receiver interaction with immediate acknowledgments (no delayed ACK logic).
+
+\subsubsection{Process Structure}
+
+The model consists of three concurrent processes:
+
+\begin{enumerate}
+    \item \textbf{Sender}: Transmits data segments sequentially, waits for ACKs
+    \item \textbf{Receiver}: Receives segments, sends immediate ACKs
+    \item \textbf{TimeKeeper}: Increments logical time counter
+\end{enumerate}
+
+\subsubsection{Communication Channels}
+
+Two buffered channels enable bidirectional message passing:
+
+\begin{verbatim}
+chan sender_to_receiver = [10] of { mtype, int };
+chan receiver_to_sender = [10] of { mtype, int };
+\end{verbatim}
+
+Messages carry a type (\texttt{DATA} or \texttt{ACK}) and sequence/acknowledgment number.
+
+\subsubsection{Sender Logic}
+
+The sender follows a simple send-and-wait pattern:
+
+\begin{verbatim}
+do
+:: (seq_num < MAX_SEGMENTS) ->
+    sender_to_receiver ! DATA(seq_num);
+    segments_sent++;
+    seq_num++;
+    receiver_to_sender ? ACK(ack_received);
+    segments_acked++;
+:: (seq_num >= MAX_SEGMENTS) -> break;
+od
+\end{verbatim}
+
+This models TCP's basic reliability: each segment is acknowledged before proceeding.
+
+\subsubsection{Receiver Logic}
+
+The receiver immediately acknowledges each received segment:
+
+\begin{verbatim}
+do
+:: sender_to_receiver ? DATA(received_seq) ->
+    assert(received_seq == expected_seq);
+    receiver_to_sender ! ACK(received_seq);
+    expected_seq++;
+:: (!connection_active && empty(sender_to_receiver)) ->
+    break;
+od
+\end{verbatim}
+
+The assertion ensures in-order delivery, a fundamental TCP property.
+
+\subsubsection{Configuration}
+
+\begin{itemize}
+    \item MAX\_SEGMENTS = 5 (smaller for faster verification)
+    \item CHANNEL\_SIZE = 10
+    \item No timer logic
+\end{itemize}
+
+\subsection{TCP Default DACK Model}
+
+\subsubsection{Purpose}
+
+The \texttt{tcp\_default\_dack.pml} model implements RFC 1122 compliant delayed acknowledgment with fixed 500ms timeout.
+
+\subsubsection{Enhanced Receiver State}
+
+The receiver maintains additional state for delayed ACKs:
+
+\begin{verbatim}
+int delayed_count = 0;         // Segments since last ACK
+bool timer_pending = false;    // Timer active?
+int timer_expiry = 0;          // When timer fires
+int last_acked_seq = -1;       // Last ACKed sequence
+\end{verbatim}
+
+\subsubsection{Delayed ACK Logic}
+
+On receiving an in-order segment, the receiver follows the delayed ACK rules:
+
+\begin{verbatim}
+:: (received_seq == expected_seq) ->
+    expected_seq++;
+    delayed_count++;
+    last_acked_seq = received_seq;
+
+    if
+    :: (delayed_count >= MAX_DELAYED_SEGS) ->
+        // Send ACK (rule: ACK every 2 segments)
+        receiver_to_sender ! ACK(received_seq);
+        delayed_acks++;
+        delayed_count = 0;
+        timer_pending = false;
+
+    :: (delayed_count < MAX_DELAYED_SEGS) ->
+        // Start/reset timer
+        timer_expiry = logical_time + ACK_TIMEOUT;
+        timer_pending = true;
+    fi
+\end{verbatim}
+
+This implements the "ACK every 2 segments" rule.
+
+\subsubsection{Timer Expiration}
+
+Timer expiration is modeled as a guarded statement:
+
+\begin{verbatim}
+:: (timer_pending && logical_time >= timer_expiry) ->
+    receiver_to_sender ! ACK(last_acked_seq);
+    delayed_acks++;
+    delayed_count = 0;
+    timer_pending = false;
+\end{verbatim}
+
+When the timer fires, the receiver sends an ACK for the last received segment.
+
+\subsubsection{Out-of-Order Handling}
+
+Out-of-order segments trigger immediate ACK:
+
+\begin{verbatim}
+:: (received_seq != expected_seq) ->
+    // Immediate ACK (duplicate)
+    receiver_to_sender ! ACK(last_acked_seq);
+    immediate_acks++;
+    delayed_count = 0;
+    timer_pending = false;
+\end{verbatim}
+
+This follows RFC 1122's fast retransmit mechanism.
+
+\subsubsection{Configuration}
+
+\begin{itemize}
+    \item MAX\_SEGMENTS = 10
+    \item MAX\_DELAYED\_SEGS = 2 (RFC 1122 requirement)
+    \item ACK\_TIMEOUT = 500 (500ms fixed timeout)
+    \item CHANNEL\_SIZE = 20
+\end{itemize}
+
+\subsection{TCP-AAD Model}
+
+\subsubsection{Purpose}
+
+The \texttt{tcp\_aad.pml} model implements the full TCP-AAD algorithm with IAT tracking and adaptive timeout calculation.
+
+\subsubsection{AAD-Specific State}
+
+In addition to delayed ACK state, TCP-AAD maintains:
+
+\begin{verbatim}
+int iat_min = MAX_IAT;           // Minimum IAT observed
+int iat_curr = 0;                // Current IAT
+int last_packet_time = 0;        // Time of last packet
+int last_reset_time = 0;         // Last IAT_min reset
+int ato = MAX_ATO;               // Adaptive timeout
+bool quick_ack_mode = false;     // Quick ACK flag
+\end{verbatim}
+
+\subsubsection{IAT Tracking}
+
+On each segment arrival, IAT is calculated and tracked:
+
+\begin{verbatim}
+if
+:: (last_packet_time > 0) ->
+    iat_curr = logical_time - last_packet_time;
+
+    // Filter small IATs
+    if
+    :: (iat_curr >= MIN_IAT_FILTER) ->
+        if
+        :: (iat_curr < iat_min) ->
+            iat_min = iat_curr;
+        :: else -> skip;
+        fi
+    :: else -> skip;  // Filtered
+    fi
+:: else -> skip;  // First packet
+fi
+last_packet_time = logical_time;
+\end{verbatim}
+
+This implements the IAT\_min tracking with noise filtering.
+
+\subsubsection{Periodic IAT Reset}
+
+Every RESET\_PERIOD (1000 time units = 1 second), IAT\_min is reset:
+
+\begin{verbatim}
+if
+:: (logical_time >= last_reset_time + RESET_PERIOD) ->
+    iat_min = MAX_IAT;
+    last_reset_time = logical_time;
+:: else -> skip;
+fi
+\end{verbatim}
+
+This allows adaptation to changing network conditions.
+
+\subsubsection{Adaptive Timeout Calculation}
+
+The ATO is calculated using integer arithmetic:
+
+\begin{verbatim}
+if
+:: (iat_min < MAX_IAT && iat_curr > 0) ->
+    ato = (iat_min * 3 + iat_curr) / 4;
+    if
+    :: (ato > MAX_ATO) -> ato = MAX_ATO;
+    :: else -> skip;
+    fi
+:: else ->
+    ato = MAX_ATO;  // No valid IAT data
+fi
+\end{verbatim}
+
+This approximates the weighted average formula while maintaining bounded ATO.
+
+\subsubsection{Quick ACK Mode}
+
+After out-of-order events, TCP-AAD enters quick ACK mode:
+
+\begin{verbatim}
+:: (received_seq != expected_seq) ->
+    receiver_to_sender ! ACK(last_acked_seq);
+    immediate_acks++;
+    quick_ack_mode = true;  // Enable quick mode
+\end{verbatim}
+
+In quick ACK mode, the next timeout is shortened:
+
+\begin{verbatim}
+:: (quick_ack_mode) ->
+    ato = MAX_ATO / 2;  // Shorter timeout
+    quick_ack_mode = false;
+\end{verbatim}
+
+\subsubsection{Configuration}
+
+\begin{itemize}
+    \item MAX\_SEGMENTS = 10
+    \item MAX\_ATO = 500 (maximum timeout)
+    \item MIN\_IAT\_FILTER = 2 (filter IATs < 0.2ms)
+    \item RESET\_PERIOD = 1000 (reset every 1 second)
+    \item CHANNEL\_SIZE = 20
+\end{itemize}
+
+\subsection{Model Comparison}
+
+Table~\ref{tab:model_comparison} summarizes the three models:
+
+\begin{table}[h]
+\centering
+\caption{Comparison of Promela Models}
+\begin{tabular}{lccc}
+\hline
+\textbf{Feature} & \textbf{Basic} & \textbf{DACK} & \textbf{AAD} \\
+\hline
+Lines of Code & 114 & 184 & 267 \\
+Processes & 3 & 3 & 3 \\
+Delayed ACK & No & Yes & Yes \\
+Adaptive Timeout & No & No & Yes \\
+IAT Tracking & No & No & Yes \\
+Quick ACK Mode & No & No & Yes \\
+Timer Logic & No & Fixed & Adaptive \\
+State Variables & 5 & 12 & 18 \\
+\hline
+\end{tabular}
+\label{tab:model_comparison}
+\end{table}
+
+The models increase in complexity from Basic (114 lines) to AAD (267 lines), reflecting the additional logic required for adaptive behavior.
+
+\subsection{Global State and Properties}
+
+All models share global state variables accessible to LTL properties:
+
+\begin{verbatim}
+int logical_time = 0;        // Abstract time
+int segments_sent = 0;       // Sender progress
+int segments_acked = 0;      // Receiver progress
+int acks_sent = 0;           // Total ACKs
+bool connection_active = true; // Session state
+\end{verbatim}
+
+DACK and AAD models add:
+
+\begin{verbatim}
+int delayed_count = 0;       // For max_delayed property
+int ato = MAX_ATO;           // For ato_bounded property
+int iat_min = MAX_IAT;       // For iat_reset property
+\end{verbatim}
+
+Making these variables global allows LTL formulas to reference them directly, enabling property verification.

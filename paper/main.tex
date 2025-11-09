@@ -1,0 +1,83 @@
+\documentclass[conference]{IEEEtran}
+
+% Packages
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{multirow}
+
+% Listings configuration for Promela
+\lstdefinelanguage{Promela}{
+  keywords={do, if, fi, od, proctype, active, int, bool, byte, short, chan, mtype, atomic, assert, printf, break, skip, else, timeout, true, false, ltl},
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  sensitive=true,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\color{blue}\bfseries,
+  commentstyle=\color{gray}\itshape,
+  stringstyle=\color{red},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false
+}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Formal Verification of TCP-AAD:\\
+Adaptive Delayed Acknowledgment over Wi-Fi\\
+Using SPIN Model Checker
+}
+
+\author{
+\IEEEauthorblockN{Your Name}
+\IEEEauthorblockA{\textit{Department of Computer Science} \\
+\textit{Innopolis University}\\
+Innopolis, Russia \\
+email@example.com}
+}
+
+\maketitle
+
+\begin{abstract}
+The TCP-AAD (Aggregation-Aware Delayed Acknowledgment) algorithm adapts acknowledgment timing based on inter-arrival times to optimize TCP performance over Wi-Fi networks with frame aggregation. While empirical studies show 9\% throughput improvement, formal verification of correctness has not been conducted. This paper presents the first formal verification of TCP-AAD using the SPIN model checker. We address the challenge of modeling timing-dependent behavior in an untimed model checker through logical time abstraction with integer arithmetic. We specify and verify nine temporal logic properties covering safety (ATO bounds, delayed segment limits), liveness (eventual acknowledgment, progress), and algorithm-specific behavior (adaptive timeout usage, IAT reset). Our verification explored 67-75 million states per property with 100\% pass rate and zero errors found. We demonstrate that TCP-AAD maintains RFC 1122 compliance while generating 36\% fewer state transitions than default delayed ACK, suggesting adaptive algorithms need not complicate verification. This work provides formal correctness guarantees for TCP-AAD deployment and demonstrates practical model checking of real-world transport protocols.
+\end{abstract}
+
+\begin{IEEEkeywords}
+TCP, Delayed Acknowledgment, Formal Verification, SPIN, Promela, Model Checking, Wi-Fi, Frame Aggregation, Network Protocols
+\end{IEEEkeywords}
+
+% Include sections
+\input{sections/introduction}
+\input{sections/background}
+\input{sections/related_work}
+\input{sections/methodology}
+\input{sections/formal_models}
+\input{sections/properties}
+\input{sections/results}
+\input{sections/discussion}
+\input{sections/conclusion}
+
+% Bibliography
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

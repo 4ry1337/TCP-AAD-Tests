@@ -1,0 +1,48 @@
+pan: ltl formula all_acked
+error: max search depth too small
+
+(Spin Version 6.5.2 -- 6 December 2019)
+	+ Partial Order Reduction
+	+ Compression
+
+Full statespace search for:
+	never claim         	+ (all_acked)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 244 byte, depth reached 9999, errors: 0
+    76645 states, stored (153290 visited)
+   196751 states, matched
+   350041 transitions (= visited+matched)
+   268270 atomic steps
+hash conflicts:       814 (resolved)
+
+Stats on memory usage (in Megabytes):
+   20.466	equivalent memory usage for states (stored*(State-vector + overhead))
+    7.220	actual memory usage for states (compression: 35.28%)
+         	state-vector as stored = 63 byte + 36 byte overhead
+  128.000	memory used for hash table (-w24)
+    0.534	memory used for DFS stack (-m10000)
+  135.663	total actual memory usage
+
+
+nr of templates: [ 0:globals 1:chans 2:procs ]
+collapse counts: [ 0:53655 2:22 3:12 4:1 5:1 ]
+unreached in proctype Sender
+	/mnt/windows/Users/thego/Documents/Dev/github.com/4ry1337/TCP-AAD-Tests/formal_methods/models/tcp_basic.pml:58, state 19, "connection_active = 0"
+	/mnt/windows/Users/thego/Documents/Dev/github.com/4ry1337/TCP-AAD-Tests/formal_methods/models/tcp_basic.pml:59, state 20, "printf('Sender: Completed. Sent=%d, Acked=%d\n',segments_sent,segments_acked)"
+	/mnt/windows/Users/thego/Documents/Dev/github.com/4ry1337/TCP-AAD-Tests/formal_methods/models/tcp_basic.pml:60, state 21, "-end-"
+	(3 of 21 states)
+unreached in proctype Receiver
+	/mnt/windows/Users/thego/Documents/Dev/github.com/4ry1337/TCP-AAD-Tests/formal_methods/models/tcp_basic.pml:87, state 15, "-end-"
+	(1 of 15 states)
+unreached in proctype TimeKeeper
+	/mnt/windows/Users/thego/Documents/Dev/github.com/4ry1337/TCP-AAD-Tests/formal_methods/models/tcp_basic.pml:102, state 12, "-end-"
+	(1 of 12 states)
+unreached in claim all_acked
+	_spin_nvr.tmp:6, state 6, "-end-"
+	(1 of 6 states)
+
+pan: elapsed time 0.09 seconds
+pan: rate 1703222.2 states/second

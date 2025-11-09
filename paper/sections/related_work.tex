@@ -1,0 +1,63 @@
+\section{Related Work}
+
+Formal verification of network protocols has a rich history, with various approaches applied to different layers of the protocol stack. This section surveys related work in three key areas: TCP verification, delayed acknowledgment optimization, and Wi-Fi protocol analysis.
+
+\subsection{Formal Verification of TCP}
+
+Several works have applied formal methods to verify TCP implementations and extensions.
+
+\textbf{TCP State Machine Verification}: Bishop et al.~\cite{bishop2019engineering} used HOL4 theorem proving to verify the TCP state machine implementation in FreeBSD. Their work focused on connection establishment, data transfer, and termination phases but did not model delayed acknowledgment logic in detail.
+
+\textbf{Congestion Control Verification}: Jain et al.~\cite{jain2021formal} formally verified TCP congestion control algorithms including Reno and Cubic using TLA+. They proved safety properties such as rate bounds and fairness but treated acknowledgment generation as atomic without delay modeling.
+
+\textbf{SPIN-based TCP Verification}: Musuvathi and Engler~\cite{musuvathi2004model} used SPIN to find bugs in TCP implementations, focusing on connection management and error handling. However, their models were simplified and did not include timing-dependent behaviors like delayed ACKs.
+
+Our work differs by specifically targeting the delayed acknowledgment mechanism and its adaptive variant, requiring careful modeling of timing behavior in an untimed model checker.
+
+\subsection{Delayed Acknowledgment Optimization}
+
+Research on optimizing delayed acknowledgments has explored various approaches:
+
+\textbf{Dynamic Adaptation}: Allman et al.~\cite{allman2010notes} analyzed the performance impact of delayed ACKs and proposed dynamic adjustment based on congestion signals. However, their approach was empirical without formal correctness guarantees.
+
+\textbf{Quick ACK Mode}: The Linux kernel implements "quick ACK mode" that temporarily disables delayed ACKs after certain events (connection start, loss detection). Our models include this behavior as it affects TCP-AAD's operation.
+
+\textbf{ECN-aware DACK}: Kuzmanovic~\cite{kuzmanovic2005problem} proposed ECN-triggered immediate ACKs to improve congestion signaling. This complements TCP-AAD's IAT-based approach.
+
+\textbf{TCP-AAD}: Albert's thesis~\cite{albert_thesis} introduced aggregation-aware delayed ACK specifically for Wi-Fi networks. Our work provides the first formal verification of this algorithm, proving properties that were previously validated only through simulation and testbed experiments.
+
+\subsection{Wireless Protocol Verification}
+
+Formal verification has been applied to various wireless protocols:
+
+\textbf{MAC Layer Verification}: Bhargavan et al.~\cite{bhargavan20064} formally verified the IEEE 802.11i security protocol using ProVerif, finding authentication vulnerabilities. However, MAC layer performance features like aggregation were not modeled.
+
+\textbf{Cross-Layer Analysis}: Chiang~\cite{chiang2005balancing} analyzed cross-layer interactions between TCP and 802.11 analytically but did not use formal verification tools.
+
+\textbf{End-to-End Properties}: Our work bridges transport and link layers by modeling how 802.11 frame aggregation affects TCP acknowledgment timing, verified using model checking.
+
+\subsection{Model Checking Techniques for Protocols}
+
+Relevant model checking approaches include:
+
+\textbf{Time Abstraction}: Daws and Yovine~\cite{daws1996two} introduced clock region abstractions for timed systems. We adapt similar concepts using logical time counters in SPIN.
+
+\textbf{State Space Reduction}: Holzmann~\cite{holzmann2003spin} developed techniques like partial order reduction and compression for SPIN. We use COLLAPSE compression to handle large state spaces.
+
+\textbf{Property Patterns}: Dwyer et al.~\cite{dwyer1999patterns} cataloged common temporal property patterns for specification. We use their patterns (bounded existence, response) for our LTL properties.
+
+\subsection{Novelty of Our Approach}
+
+Our work makes several novel contributions:
+
+\begin{enumerate}
+    \item \textbf{First formal verification of TCP-AAD}: We provide the first rigorous correctness proof of the aggregation-aware delayed ACK algorithm.
+
+    \item \textbf{Time abstraction for adaptive algorithms}: We develop a methodology for modeling adaptive timeout calculations in untimed model checkers using integer arithmetic.
+
+    \item \textbf{Comparative verification}: We verify both standard DACK and TCP-AAD in parallel, enabling direct comparison of state space complexity and verified properties.
+
+    \item \textbf{Practical validation}: Our models are validated against a real Linux kernel implementation, ensuring the verification reflects actual system behavior.
+\end{enumerate}
+
+Unlike previous work that focused on either TCP correctness or wireless performance, we bridge both domains to formally verify a transport-layer adaptation to link-layer behavior.

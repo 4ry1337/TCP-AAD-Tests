@@ -1,0 +1,107 @@
+{
+  "timestamp": "2025-11-09T16:04:33.636681",
+  "report_file": "results/verification_outputs/verification_report_20251109_155214.txt",
+  "summary": {
+    "tcp_basic": {
+      "total": 2,
+      "passed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "total_states": 183911,
+      "total_memory": 0,
+      "pass": 2
+    },
+    "tcp_default_dack": {
+      "total": 3,
+      "passed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "total_states": 142981364,
+      "total_memory": 0,
+      "pass": 3
+    },
+    "tcp_aad": {
+      "total": 4,
+      "passed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "total_states": 210410373,
+      "total_memory": 0,
+      "pass": 4
+    }
+  },
+  "results": [
+    {
+      "model": "tcp_basic",
+      "property": "All segments acknowledged",
+      "result": "PASS",
+      "states": 76645,
+      "transitions": 196751,
+      "memory_mb": 0
+    },
+    {
+      "model": "tcp_basic",
+      "property": "Progress check",
+      "result": "PASS",
+      "states": 107266,
+      "transitions": 122704,
+      "memory_mb": 0
+    },
+    {
+      "model": "tcp_default_dack",
+      "property": "Max 2 delayed segments",
+      "result": "PASS",
+      "states": 75478865,
+      "transitions": 0,
+      "memory_mb": 0
+    },
+    {
+      "model": "tcp_default_dack",
+      "property": "Eventual acknowledgment",
+      "result": "PASS",
+      "states": 1,
+      "transitions": 0,
+      "memory_mb": 0
+    },
+    {
+      "model": "tcp_default_dack",
+      "property": "Connection completion",
+      "result": "PASS",
+      "states": 67502498,
+      "transitions": 0,
+      "memory_mb": 0
+    },
+    {
+      "model": "tcp_aad",
+      "property": "ATO bounded",
+      "result": "PASS",
+      "states": 75405417,
+      "transitions": 72445327,
+      "memory_mb": 0
+    },
+    {
+      "model": "tcp_aad",
+      "property": "Eventual acknowledgment",
+      "result": "PASS",
+      "states": 1,
+      "transitions": 0,
+      "memory_mb": 0
+    },
+    {
+      "model": "tcp_aad",
+      "property": "Adaptive ACKs used",
+      "result": "PASS",
+      "states": 67502474,
+      "transitions": 0,
+      "memory_mb": 0
+    },
+    {
+      "model": "tcp_aad",
+      "property": "Connection completion",
+      "result": "PASS",
+      "states": 67502481,
+      "transitions": 0,
+      "memory_mb": 0
+    }
+  ]
+}

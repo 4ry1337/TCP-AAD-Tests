@@ -1,0 +1,72 @@
+\section{Introduction}
+
+\subsection{Motivation}
+
+The Transmission Control Protocol (TCP) remains the dominant transport protocol for reliable data transmission across the Internet. A critical component of TCP's reliability mechanism is the acknowledgment (ACK) system, where receivers confirm successful packet delivery. To reduce network overhead, RFC 1122 \cite{rfc1122} introduced \textit{delayed acknowledgments} (DACK), which batch ACKs for multiple segments rather than sending one ACK per received packet.
+
+While DACK works well in traditional wired networks, modern Wi-Fi environments present new challenges. The IEEE 802.11n/ac/ax standards introduced \textit{frame aggregation} at the MAC layer, where multiple packets are combined into a single transmission frame. This creates bursty traffic patterns with variable inter-arrival times (IAT) that static DACK strategies cannot efficiently handle. The TCP-AAD (Aggregation-Aware Delayed Acknowledgment) algorithm was proposed to address this limitation by dynamically adapting ACK timing based on observed IAT patterns \cite{tcp_aad_paper}.
+
+Simulation studies have shown that TCP-AAD achieves approximately 5-9\% throughput improvement over default DACK implementations \cite{tcp_aad_thesis}. However, \textbf{no formal verification of the algorithm's correctness has been performed}. This raises important questions:
+
+\begin{itemize}
+\item Does TCP-AAD always respect the maximum ACK timeout bounds?
+\item Can the adaptive timeout calculation overflow or produce invalid values?
+\item Does TCP-AAD guarantee that all segments are eventually acknowledged?
+\item How does TCP-AAD behave under edge cases not covered in simulation?
+\end{itemize}
+
+\subsection{Challenges}
+
+Formal verification of TCP-AAD presents unique challenges:
+
+\textbf{C1. Timing-Dependent Behavior in Untimed Models:} TCP-AAD fundamentally relies on timing - calculating inter-arrival times, setting adaptive timeouts, and periodic resets. However, the SPIN model checker operates on untimed discrete event semantics. There is no native concept of ``waiting 50 milliseconds.''
+
+\textbf{C2. Continuous Values in Discrete State Space:} Real networks have continuous time and real-valued measurements. Model checkers explore discrete state spaces. We must abstract continuous IAT measurements into discrete, verifiable states without losing essential behavioral properties.
+
+\textbf{C3. State Space Explosion:} Network protocols inherently have large state spaces (packet orderings, timing interleavings, buffer states). Adding timing information exponentially increases complexity. Verification must remain tractable.
+
+\textbf{C4. Comparison with Existing Implementation:} To demonstrate TCP-AAD's correctness, we must also model the existing Linux kernel DACK implementation and verify comparative properties. This requires understanding and faithfully modeling heuristic-based logic.
+
+\subsection{Contributions}
+
+This paper makes the following contributions:
+
+\begin{enumerate}
+\item \textbf{First Formal Verification of TCP-AAD:} We present the first formal specification and verification of the TCP-AAD algorithm using SPIN/Promela, establishing correctness guarantees beyond simulation.
+
+\item \textbf{Time Abstraction Methodology:} We develop and validate a logical time abstraction technique that enables verification of timing-dependent protocols in untimed model checkers. This methodology is reusable for other network protocols.
+
+\item \textbf{Comprehensive Property Specification:} We specify 20+ temporal logic (LTL) properties covering:
+\begin{itemize}
+\item Safety properties (bounds, no overflow, valid states)
+\item Liveness properties (eventual ACK, progress, periodic reset)
+\item Correctness properties (ACK ordering, adaptive behavior)
+\item Comparative properties (DACK vs. TCP-AAD)
+\end{itemize}
+
+\item \textbf{Verified Bounds and Constraints:} Through verification, we identify and document the precise conditions under which TCP-AAD operates correctly, including parameter bounds, timing constraints, and edge case handling.
+
+\item \textbf{Reusable Verification Framework:} We provide complete, open-source Promela models, property specifications, and automated verification scripts that can be adapted for verifying other TCP enhancement algorithms.
+
+\item \textbf{Bug Discovery:} Our verification identified several corner cases not covered in original simulation studies, demonstrating the value of formal methods for protocol validation.
+\end{enumerate}
+
+\subsection{Paper Organization}
+
+The remainder of this paper is organized as follows:
+
+\textbf{Section \ref{sec:related}} surveys related work in formal verification of network protocols, TCP enhancements, and delayed acknowledgment strategies.
+
+\textbf{Section \ref{sec:background}} provides background on TCP delayed acknowledgment, the TCP-AAD algorithm, and the SPIN model checker.
+
+\textbf{Section \ref{sec:methodology}} describes our verification methodology, including the time abstraction approach and modeling strategy.
+
+\textbf{Section \ref{sec:model}} presents the detailed Promela models of TCP-AAD, default DACK, and baseline TCP.
+
+\textbf{Section \ref{sec:properties}} specifies the temporal logic properties verified and explains their significance.
+
+\textbf{Section \ref{sec:results}} reports verification results, including state space statistics, property outcomes, and counter-examples found.
+
+\textbf{Section \ref{sec:discussion}} discusses the implications of our results, limitations of the approach, and lessons learned.
+
+\textbf{Section \ref{sec:conclusion}} concludes and outlines future work.

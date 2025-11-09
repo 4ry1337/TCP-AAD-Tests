@@ -1,0 +1,7 @@
+ltl all_acked: <> (((segments_sent==segments_acked)) && ((segments_sent==5)))
+ltl correct_count: [] ((! (! (connection_active))) || ((segments_sent==segments_acked)))
+ltl progress: [] (<> ((! ((segments_sent>0))) || ((segments_acked>0))))
+  the model contains 3 never claims: progress, correct_count, all_acked
+  only one claim is used in a verification run
+  choose which one with ./pan -a -N name (defaults to -N all_acked)
+  or use e.g.: spin -search -ltl all_acked /mnt/windows/Users/thego/Documents/Dev/github.com/4ry1337/TCP-AAD-Tests/formal_methods/models/tcp_basic.pml
