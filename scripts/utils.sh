@@ -33,12 +33,44 @@ check_ssh() {
     local ssh_opts=$4  # Optional SSH options
 
     log_info "Checking SSH connectivity to ${name} (${user}@${host})..."
-    if ssh ${ssh_opts} -o ConnectTimeout=5 -o BatchMode=yes "${user}@${host}" "exit" 2>/dev/null; then
-        log_success "SSH connection to ${name} successful"
-        return 0
+
+    # Check if this is router and password is set
+    if [ "$host" = "$ROUTER_IP" ] && [ -n "$ROUTER_PASSWORD" ]; then
+        if command_exists sshpass; then
+            if sshpass -p "$ROUTER_PASSWORD" ssh ${ssh_opts} -o ConnectTimeout=5 "${user}@${host}" "exit" 2>/dev/null; then
+                log_success "SSH connection to ${name} successful (password auth)"
+                return 0
+            else
+                log_error "Cannot connect to ${name} via SSH (check password)"
+                return 1
+            fi
+        else
+            log_error "sshpass not installed. Install with: sudo apt install sshpass"
+            return 1
+        fi
     else
-        log_error "Cannot connect to ${name} via SSH"
-        return 1
+        # Standard SSH key-based auth
+        if ssh ${ssh_opts} -o ConnectTimeout=5 -o BatchMode=yes "${user}@${host}" "exit" 2>/dev/null; then
+            log_success "SSH connection to ${name} successful"
+            return 0
+        else
+            log_error "Cannot connect to ${name} via SSH"
+            return 1
+        fi
+    fi
+}
+
+# Helper function to execute SSH commands on router
+# Automatically handles password authentication if configured
+router_ssh() {
+    if [ -n "$ROUTER_PASSWORD" ]; then
+        if ! command_exists sshpass; then
+            log_error "sshpass not installed. Install with: sudo apt install sshpass"
+            return 1
+        fi
+        sshpass -p "$ROUTER_PASSWORD" ssh ${ROUTER_SSH_OPTS} "${ROUTER_USER}@${ROUTER_IP}" "$@"
+    else
+        ssh ${ROUTER_SSH_OPTS} "${ROUTER_USER}@${ROUTER_IP}" "$@"
     fi
 }
 
@@ -55,8 +87,16 @@ verify_dependencies() {
         missing_deps+=("ssh")
     fi
 
+    # Check for sshpass if router password is configured
+    if [ -n "$ROUTER_PASSWORD" ] && ! command_exists sshpass; then
+        missing_deps+=("sshpass")
+    fi
+
     if [ ${#missing_deps[@]} -ne 0 ]; then
         log_error "Missing dependencies: ${missing_deps[*]}"
+        if [[ " ${missing_deps[*]} " =~ " sshpass " ]]; then
+            log_error "Install sshpass with: sudo apt install sshpass"
+        fi
         return 1
     fi
 
