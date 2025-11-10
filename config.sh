@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 KERNEL_TYPE=${1:-"tcpaad"} # Kernel type: "tcpaad" or "default"
 SERVER_IP="192.168.1.165" # Modified machine (WiFi, iperf3 server)
