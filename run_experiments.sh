@@ -34,7 +34,7 @@ log_info "Starting pre-flight checks..."
 verify_dependencies || exit 1
 
 # Check SSH connectivity
-check_ssh "${ROUTER_USER}" "${ROUTER_IP}" "Router" || exit 1
+check_ssh "${ROUTER_USER}" "${ROUTER_IP}" "Router" "${ROUTER_SSH_OPTS}" || exit 1
 check_ssh "${SERVER_USER}" "${SERVER_IP}" "Server" || exit 1
 
 # Display server kernel version

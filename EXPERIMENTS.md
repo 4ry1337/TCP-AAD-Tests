@@ -29,8 +29,9 @@ The experiment suite conducts comprehensive tests comparing TCP-AAD (Aggregation
 - Runs test orchestration and iperf3 client
 
 **Router**:
-- OpenWRT with scripts for rate control
+- OpenWRT with `/root/fixrate1` script for rate control
 - SSH accessible from client
+- **Note**: Older OpenWRT routers may require ssh-rsa algorithm (already configured in `config.sh`)
 
 
 ## Running Experiments
@@ -102,6 +103,22 @@ Creates visualizations in `results/plots/`:
 Check logs:
 ```bash
 tail -f results/logs/experiment.log
+```
+
+### SSH connection issues
+
+**Router connection errors** (e.g., "no matching host key type found"):
+
+OpenWRT routers often require older ssh-rsa algorithm. This is already configured in `config.sh` via `ROUTER_SSH_OPTS`.
+
+To manually test router connection:
+```bash
+ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa root@router_ip
+```
+
+To setup SSH keys for router:
+```bash
+ssh-copy-id -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa root@router_ip
 ```
 
 ### iperf3 port already in use

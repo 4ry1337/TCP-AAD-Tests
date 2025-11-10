@@ -12,8 +12,10 @@
 2. **Setup SSH keys**:
    ```bash
    ssh-copy-id user@server_ip
-   ssh-copy-id root@router_ip
+   ssh-copy-id -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa root@router_ip
    ```
+
+   **Note**: OpenWRT routers may require older ssh-rsa algorithm. This is already configured in `config.sh`.
 
 3. **Install dependencies**:
    ```bash
@@ -81,7 +83,7 @@ Find results in:
 tail -f results/logs/experiment.log
 
 # Verify SSH
-ssh root@router_ip "echo OK"
+ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa root@router_ip "echo OK"
 ssh user@server_ip "echo OK"
 ```
 

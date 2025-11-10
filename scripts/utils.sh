@@ -30,9 +30,10 @@ check_ssh() {
     local user=$1
     local host=$2
     local name=$3
+    local ssh_opts=$4  # Optional SSH options
 
     log_info "Checking SSH connectivity to ${name} (${user}@${host})..."
-    if ssh -o ConnectTimeout=5 -o BatchMode=yes "${user}@${host}" "exit" 2>/dev/null; then
+    if ssh ${ssh_opts} -o ConnectTimeout=5 -o BatchMode=yes "${user}@${host}" "exit" 2>/dev/null; then
         log_success "SSH connection to ${name} successful"
         return 0
     else
