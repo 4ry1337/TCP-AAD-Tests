@@ -20,7 +20,7 @@ fi
 
 log_info "Setting WiFi rate to index ${RATE_INDEX} (${RATE_MAP[$RATE_INDEX]})"
 
-if router_ssh "/root/fixrate1 ${RATE_INDEX}" 2>/dev/null; then
+if ssh ${ROUTER_SSH_OPTS} "${ROUTER_USER}@${ROUTER_IP}" "/root/fixrate1 ${RATE_INDEX}" 2>/dev/null; then
     log_success "WiFi rate set to ${RATE_INDEX}"
     exit 0
 else
