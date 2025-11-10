@@ -1,11 +1,11 @@
 #!/bin/bash
 
 KERNEL_TYPE=${1:-"tcpaad"} # Kernel type: "tcpaad" or "default"
-SERVER_IP="192.168.1.100"  # Modified machine (WiFi, iperf3 server)
+SERVER_IP="10.110.113.136" # Modified machine (WiFi, iperf3 server)
 CLIENT_IP="192.168.1.50"   # Default machine (Ethernet, iperf3 client)
 ROUTER_IP="192.168.1.1"    # OpenWRT router
 ROUTER_USER="root"         # Router SSH username
-SERVER_USER="user"         # Server SSH username (adjust as needed)
+SERVER_USER="rakhat"       # Server SSH username (adjust as needed)
 SERVER_WIFI_IFACE="wlan0"  # WiFi interface on server
 
 IPERF_PORT=5201
