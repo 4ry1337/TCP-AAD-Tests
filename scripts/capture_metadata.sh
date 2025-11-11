@@ -16,19 +16,19 @@ OUTPUT_FILE=$1
     echo "  \"timestamp\": \"$(date -Iseconds)\","
     echo "  \"kernel\": \"${KERNEL_TYPE}\","
     echo -n "  \"server_kernel_version\": \""
-    ssh "${SERVER_USER}@${SERVER_IP}" "uname -r" 2>/dev/null | tr -d '\n'
+    ssh "${SERVER_USER}@${SERVER_IP}" "uname -r" | tr -d '\n'
     echo "\","
     echo "  \"wifi_stats\": {"
     echo -n "    \"rc_stats\": \""
-    ssh ${ROUTER_SSH_OPTS} "${ROUTER_USER}@${ROUTER_IP}" "cat /sys/kernel/debug/ieee80211/phy1/rc/fixed_rate_idx 2>/dev/null" 2>/dev/null | tr -d '\n'
+    router_ssh "cat /sys/kernel/debug/ieee80211/phy1/rc/fixed_rate_idx 2>/dev/null" | tr -d '\n'
     echo "\","
     echo -n "    \"station_info\": \""
-    ssh ${ROUTER_SSH_OPTS} "${ROUTER_USER}@${ROUTER_IP}" "iw dev wlan0 station dump 2>/dev/null | head -20" 2>/dev/null | sed 's/"/\\"/g' | tr '\n' ' ' | tr -d '\r'
+    router_ssh "iw dev wlan0 station dump 2>/dev/null | head -20" | sed 's/"/\\"/g' | tr '\n' ' ' | tr -d '\r'
     echo "\""
     echo "  },"
     echo "  \"tcp_stats\": {"
     echo -n "    \"ss_output\": \""
-    ssh "${SERVER_USER}@${SERVER_IP}" "ss -tin dst ${CLIENT_IP} 2>/dev/null" 2>/dev/null | sed 's/"/\\"/g' | tr '\n' ' ' | tr -d '\r'
+    ssh "${SERVER_USER}@${SERVER_IP}" "ss -tin dst ${CLIENT_IP} 2>/dev/null" | sed 's/"/\\"/g' | tr '\n' ' ' | tr -d '\r'
     echo "\""
     echo "  }"
     echo "}"

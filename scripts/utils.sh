@@ -115,7 +115,7 @@ validate_ip() {
 }
 
 get_server_kernel() {
-    ssh "${SERVER_USER}@${SERVER_IP}" "uname -r" 2>/dev/null
+    ssh "${SERVER_USER}@${SERVER_IP}" "uname -r"
 }
 
 cleanup_on_error() {

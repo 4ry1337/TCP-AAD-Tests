@@ -22,7 +22,7 @@ log_info "Applying tc: bandwidth=${BANDWIDTH}mb, delay=${DELAY}ms"
 if [ "$BANDWIDTH" = "nolim" ]; then
     # Only apply delay, no bandwidth limit
     if ssh "${SERVER_USER}@${SERVER_IP}" \
-        "sudo tc qdisc add dev ${SERVER_WIFI_IFACE} root netem delay ${DELAY}ms" 2>/dev/null; then
+        "sudo tc qdisc add dev ${SERVER_WIFI_IFACE} root netem delay ${DELAY}ms"; then
         log_success "Applied tc: delay=${DELAY}ms (no bandwidth limit)"
         exit 0
     else
@@ -31,13 +31,13 @@ if [ "$BANDWIDTH" = "nolim" ]; then
     fi
 else
     if ! ssh "${SERVER_USER}@${SERVER_IP}" \
-        "sudo tc qdisc add dev ${SERVER_WIFI_IFACE} root handle 1: tbf rate ${BANDWIDTH}mbit burst 32kbit latency 400ms" 2>/dev/null; then
+        "sudo tc qdisc add dev ${SERVER_WIFI_IFACE} root handle 1: tbf rate ${BANDWIDTH}mbit burst 32kbit latency 400ms"; then
         log_error "Failed to apply tc bandwidth limit"
         exit 1
     fi
 
     if ! ssh "${SERVER_USER}@${SERVER_IP}" \
-        "sudo tc qdisc add dev ${SERVER_WIFI_IFACE} parent 1:1 handle 10: netem delay ${DELAY}ms" 2>/dev/null; then
+        "sudo tc qdisc add dev ${SERVER_WIFI_IFACE} parent 1:1 handle 10: netem delay ${DELAY}ms"; then
         log_error "Failed to apply tc delay"
         # Cleanup partial configuration
         ssh "${SERVER_USER}@${SERVER_IP}" "sudo tc qdisc del dev ${SERVER_WIFI_IFACE} root" 2>/dev/null
