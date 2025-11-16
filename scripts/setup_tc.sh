@@ -14,36 +14,33 @@ fi
 BANDWIDTH=$1
 DELAY=$2
 
-"${SCRIPT_DIR}/scripts/cleanup_tc.sh" 2>/dev/null
+"${SCRIPT_DIR}/scripts/cleanup_tc.sh"
 
-log_info "Applying tc: bandwidth=${BANDWIDTH}mb, delay=${DELAY}ms"
+log_info "Applying tc on ${CLIENT_IFACE}: bw=${BANDWIDTH}mb, d=${DELAY}ms"
 
-# Apply tc rules
 if [ "$BANDWIDTH" = "nolim" ]; then
-    # Only apply delay, no bandwidth limit
-    if ssh "${SERVER_USER}@${SERVER_IP}" \
-        "sudo tc qdisc add dev ${SERVER_WIFI_IFACE} root netem delay ${DELAY}ms"; then
+    if sudo tc qdisc add dev ${CLIENT_IFACE} root netem delay ${DELAY}ms; then
         log_success "Applied tc: delay=${DELAY}ms (no bandwidth limit)"
         exit 0
     else
-        log_error "Failed to apply tc delay"
+        log_error "Failed to apply tc delay (see error above)"
         exit 1
     fi
 else
-    if ! ssh "${SERVER_USER}@${SERVER_IP}" \
-        "sudo tc qdisc add dev ${SERVER_WIFI_IFACE} root handle 1: tbf rate ${BANDWIDTH}mbit burst 32kbit latency 400ms"; then
-        log_error "Failed to apply tc bandwidth limit"
+    # Step 1: Add tbf qdisc for bandwidth limiting
+    if ! sudo tc qdisc add dev ${CLIENT_IFACE} root handle 1: tbf rate ${BANDWIDTH}mbit burst 32kbit latency 400ms; then
+        log_error "Failed to apply tc bandwidth limit (see error above)"
         exit 1
     fi
 
-    if ! ssh "${SERVER_USER}@${SERVER_IP}" \
-        "sudo tc qdisc add dev ${SERVER_WIFI_IFACE} parent 1:1 handle 10: netem delay ${DELAY}ms"; then
-        log_error "Failed to apply tc delay"
+    # Step 2: Add netem qdisc as child for delay
+    if ! sudo tc qdisc add dev ${CLIENT_IFACE} parent 1:1 handle 10: netem delay ${DELAY}ms; then
+        log_error "Failed to apply tc delay (see error above)"
         # Cleanup partial configuration
-        ssh "${SERVER_USER}@${SERVER_IP}" "sudo tc qdisc del dev ${SERVER_WIFI_IFACE} root" 2>/dev/null
+        sudo tc qdisc del dev ${CLIENT_IFACE} root 2>/dev/null
         exit 1
     fi
 
-    log_success "Applied tc: bandwidth=${BANDWIDTH}mb, delay=${DELAY}ms"
+    log_success "Applied tc on client: bandwidth=${BANDWIDTH}mb, delay=${DELAY}ms"
     exit 0
 fi

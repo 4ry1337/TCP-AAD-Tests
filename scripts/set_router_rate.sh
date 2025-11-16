@@ -24,6 +24,6 @@ if router_ssh "/root/fixrate1 ${RATE_INDEX}"; then
     log_success "WiFi rate set to ${RATE_INDEX}"
     exit 0
 else
-    log_error "Failed to set WiFi rate on router"
+    log_error "Failed to set WiFi rate on router (see error above)"
     exit 1
 fi

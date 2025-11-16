@@ -100,15 +100,15 @@ for bw in "${BANDWIDTHS[@]}"; do
                 # Small delay to let tc settle
                 sleep 2
 
-                # Capture pre-test metadata
-                "${SCRIPT_DIR}/scripts/capture_metadata.sh" "${metadata_file}" 2>/dev/null || true
+                # Capture pre-test metadata (errors non-fatal)
+                "${SCRIPT_DIR}/scripts/capture_metadata.sh" "${metadata_file}" 2>&1 | tee -a "${LOGS_DIR}/experiment.log" || true
 
                 # Run iperf3 test
                 if ! iperf3 -c "${SERVER_IP}" -p "${IPERF_PORT}" -t "${TEST_DURATION}" -J > "${result_file}" 2>&1; then
                     log_error "iperf3 test failed: ${test_name}"
+                    log_error "Check ${result_file} for error details"
                     failed_count=$((failed_count + 1))
-                    # Save error output
-                    echo "{\"error\": \"iperf3 test failed\"}" > "${result_file}"
+                    # Note: Error output is already in result_file, don't overwrite it
                 fi
 
                 # Cleanup traffic control

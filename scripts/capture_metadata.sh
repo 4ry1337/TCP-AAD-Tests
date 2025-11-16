@@ -20,15 +20,15 @@ OUTPUT_FILE=$1
     echo "\","
     echo "  \"wifi_stats\": {"
     echo -n "    \"rc_stats\": \""
-    router_ssh "cat /sys/kernel/debug/ieee80211/phy1/rc/fixed_rate_idx 2>/dev/null" | tr -d '\n'
+    router_ssh "cat /sys/kernel/debug/ieee80211/phy1/rc/fixed_rate_idx" | tr -d '\n'
     echo "\","
     echo -n "    \"station_info\": \""
-    router_ssh "iw dev wlan0 station dump 2>/dev/null | head -20" | sed 's/"/\\"/g' | tr '\n' ' ' | tr -d '\r'
+    router_ssh "iw dev wlan0 station dump | head -20" | sed 's/"/\\"/g' | tr '\n' ' ' | tr -d '\r'
     echo "\""
     echo "  },"
     echo "  \"tcp_stats\": {"
     echo -n "    \"ss_output\": \""
-    ssh "${SERVER_USER}@${SERVER_IP}" "ss -tin dst ${CLIENT_IP} 2>/dev/null" | sed 's/"/\\"/g' | tr '\n' ' ' | tr -d '\r'
+    ssh "${SERVER_USER}@${SERVER_IP}" "ss -tin dst ${CLIENT_IP}" | sed 's/"/\\"/g' | tr '\n' ' ' | tr -d '\r'
     echo "\""
     echo "  }"
     echo "}"

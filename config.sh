@@ -6,8 +6,12 @@ CLIENT_IP="192.168.1.50"   # Default machine (Ethernet, iperf3 client)
 ROUTER_IP="192.168.1.1"    # OpenWRT router
 ROUTER_USER="root"         # Router SSH username
 ROUTER_SSH_OPTS="-oHostKeyAlgorithms=+ssh-rsa -oPubkeyAcceptedAlgorithms=+ssh-rsa"  # SSH options for older OpenWRT routers
+ROUTER_PASSWORD=""         # Router SSH password (leave empty if using SSH keys)
+                           # WARNING: Password stored in plaintext. For local networks only.
 SERVER_USER="rakhat"       # Server SSH username (adjust as needed)
-SERVER_WIFI_IFACE="wlan0"  # WiFi interface on server
+SERVER_WIFI_IFACE="wlan0"  # WiFi interface on server (not used for tc)
+CLIENT_IFACE="eth0"        # Client ethernet interface (for tc bandwidth/delay shaping)
+                           # Common names: eth0, enp0s3, ens33, etc. Check with: ip link show
 
 IPERF_PORT=5201
 TEST_DURATION=30 # seconds per test
@@ -30,7 +34,7 @@ declare -A RATE_MAP=(
     [104]="HT40-SGI-MCS12" [105]="HT40-SGI-MCS13" [106]="HT40-SGI-MCS14" [107]="HT40-SGI-MCS15"
 )
 
-export SERVER_IP CLIENT_IP ROUTER_IP ROUTER_USER ROUTER_SSH_OPTS SERVER_USER SERVER_WIFI_IFACE
+export SERVER_IP CLIENT_IP ROUTER_IP ROUTER_USER ROUTER_SSH_OPTS ROUTER_PASSWORD SERVER_USER SERVER_WIFI_IFACE CLIENT_IFACE
 export IPERF_PORT TEST_DURATION
 export BANDWIDTHS DELAYS RATES ITERATIONS
 export SETTLE_TIME KERNEL_TYPE
