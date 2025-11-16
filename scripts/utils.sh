@@ -30,10 +30,10 @@ check_ssh() {
     local user=$1
     local host=$2
     local name=$3
-    local ssh_opts=$4  # Optional SSH options
+    local ssh_opts=$4
 
     log_info "Checking SSH connectivity to ${name} (${user}@${host})..."
-    if ssh ${ssh_opts} -o ConnectTimeout=5 -o BatchMode=yes "${user}@${host}" "exit" 2>/dev/null; then
+    if ssh ${ssh_opts} "${user}@${host}" "exit" 2>/dev/null; then
         log_success "SSH connection to ${name} successful"
         return 0
     else
@@ -62,6 +62,11 @@ verify_dependencies() {
 
     log_success "All dependencies found"
     return 0
+}
+
+# Helper function to execute SSH commands on router
+router_ssh() {
+    ssh ${ROUTER_SSH_OPTS} "${ROUTER_USER}@${ROUTER_IP}" "$@"
 }
 
 ensure_dir() {
