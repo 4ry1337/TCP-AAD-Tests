@@ -10,7 +10,7 @@ ROUTER_PASSWORD=""         # Router SSH password (leave empty if using SSH keys)
                            # WARNING: Password stored in plaintext. For local networks only.
 SERVER_USER="rakhat"       # Server SSH username (adjust as needed)
 SERVER_WIFI_IFACE="wlan0"  # WiFi interface on server (not used for tc)
-CLIENT_IFACE="eth0"        # Client ethernet interface (for tc bandwidth/delay shaping)
+CLIENT_IFACE="enp7s0"        # Client ethernet interface (for tc bandwidth/delay shaping)
                            # Common names: eth0, enp0s3, ens33, etc. Check with: ip link show
 
 IPERF_PORT=5201
