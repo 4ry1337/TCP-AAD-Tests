@@ -1,0 +1,12 @@
+{
+  "timestamp": "2025-11-17T03:06:50+05:00",
+  "kernel": "/home/rakhat/ghq/github.com/4ry1337/TCP-AAD-Tests/results/tcpaad/metadata/bw10_delay50_rate37_iter1.json",
+  "server_kernel_version": "6.12.9-gb9f85fb59f1f",
+  "wifi_stats": {
+    "rc_stats": "37",
+    "station_info": ""
+  },
+  "tcp_stats": {
+    "ss_output": "State Recv-Q Send-Q Local Address:Port Peer Address:Port "
+  }
+}
