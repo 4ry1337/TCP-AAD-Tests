@@ -1,11 +1,11 @@
 # Experiment Results
-results/tcpaad/raw/*.json
-results/default/raw/*.json
-results/tcpaad/metadata/*.json
-results/default/metadata/*.json
-results/logs/*.log
-results/*.csv
-results/plots/*.png
+# results/tcpaad/raw/*.json
+# results/default/raw/*.json
+# results/tcpaad/metadata/*.json
+# results/default/metadata/*.json
+# results/logs/*.log
+# results/*.csv
+# results/plots/*.png
 
 # Python
 __pycache__/
