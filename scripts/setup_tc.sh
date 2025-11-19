@@ -16,9 +16,16 @@ DELAY=$2
 
 "${SCRIPT_DIR}/scripts/cleanup_tc.sh"
 
-log_info "Applying tc on ${CLIENT_IFACE}: bw=${BANDWIDTH}mb, d=${DELAY}ms"
+log_info "Applying tc on ${CLIENT_IFACE}: bw=${BANDWIDTH}, delay=${DELAY}"
 
-if [ "$BANDWIDTH" = "nolim" ]; then
+# Handle all combinations of bandwidth and delay settings
+if [ "$BANDWIDTH" = "nolim" ] && [ "$DELAY" = "nodelay" ]; then
+    # No tc needed - skip entirely
+    log_success "No tc applied (nolim bandwidth, nodelay)"
+    exit 0
+
+elif [ "$BANDWIDTH" = "nolim" ]; then
+    # Only apply delay, no bandwidth limit
     if sudo tc qdisc add dev ${CLIENT_IFACE} root netem delay ${DELAY}ms; then
         log_success "Applied tc: delay=${DELAY}ms (no bandwidth limit)"
         exit 0
@@ -26,7 +33,19 @@ if [ "$BANDWIDTH" = "nolim" ]; then
         log_error "Failed to apply tc delay (see error above)"
         exit 1
     fi
+
+elif [ "$DELAY" = "nodelay" ]; then
+    # Only apply bandwidth limit, no delay
+    if sudo tc qdisc add dev ${CLIENT_IFACE} root tbf rate ${BANDWIDTH}mbit burst 32kbit latency 400ms; then
+        log_success "Applied tc: bandwidth=${BANDWIDTH}mb (no added delay)"
+        exit 0
+    else
+        log_error "Failed to apply tc bandwidth limit (see error above)"
+        exit 1
+    fi
+
 else
+    # Apply both bandwidth limit and delay
     # Step 1: Add tbf qdisc for bandwidth limiting
     if ! sudo tc qdisc add dev ${CLIENT_IFACE} root handle 1: tbf rate ${BANDWIDTH}mbit burst 32kbit latency 400ms; then
         log_error "Failed to apply tc bandwidth limit (see error above)"
@@ -41,6 +60,6 @@ else
         exit 1
     fi
 
-    log_success "Applied tc on client: bandwidth=${BANDWIDTH}mb, delay=${DELAY}ms"
+    log_success "Applied tc: bandwidth=${BANDWIDTH}mb, delay=${DELAY}ms"
     exit 0
 fi

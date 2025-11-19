@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/config.sh"
 
 echo "TCP-AAD Experiment Progress"
 
-BANDWIDTHS=(10 20 50 nolim)
-DELAYS=(10 50 100)
-RATES=(34 35 36 37 44 45 46 47 94 95 96 97 104 105 106 107)
-ITERATIONS=3
 TOTAL_EXPECTED=$((${#BANDWIDTHS[@]} * ${#DELAYS[@]} * ${#RATES[@]} * ${ITERATIONS}))
 
 echo "Expected tests per kernel: ${TOTAL_EXPECTED}"
@@ -21,7 +17,7 @@ if [ -d "${SCRIPT_DIR}/results/tcpaad/raw" ]; then
 
     if [ $TCPAAD_COUNT -lt $TOTAL_EXPECTED ]; then
         REMAINING=$((TOTAL_EXPECTED - TCPAAD_COUNT))
-        EST_TIME=$((REMAINING * 35 / 60))  # 35 seconds per test
+        EST_TIME=$((REMAINING * 40 / 60))
         echo "  Remaining: ${REMAINING} tests (~${EST_TIME} minutes)"
     else
         echo "  Status: Complete"
@@ -41,7 +37,7 @@ if [ -d "${SCRIPT_DIR}/results/default/raw" ]; then
 
     if [ $DEFAULT_COUNT -lt $TOTAL_EXPECTED ]; then
         REMAINING=$((TOTAL_EXPECTED - DEFAULT_COUNT))
-        EST_TIME=$((REMAINING * 35 / 60))  # 35 seconds per test
+        EST_TIME=$((REMAINING * 40 / 60))  # 35 seconds per test
         echo "  Remaining: ${REMAINING} tests (~${EST_TIME} minutes)"
     else
         echo "  Status: ✓ Complete"

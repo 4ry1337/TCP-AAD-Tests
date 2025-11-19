@@ -81,5 +81,3 @@ for the analysis notebook.
 5. **Minstrel rate control (mac80211)** (Linux Wireless docs; background paper).
 6. **tc netem** (Linux network emulator).
 7. **Flent** (Flexible Network Tester) for automated multi-tool tests & plotting.
-
-
