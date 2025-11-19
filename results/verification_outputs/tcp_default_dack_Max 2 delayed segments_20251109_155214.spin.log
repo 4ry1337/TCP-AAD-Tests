@@ -1,8 +1,0 @@
-ltl eventual_ack_dack: <> ((! ((segments_sent>0))) || ((segments_acked==segments_sent)))
-ltl max_two_delayed: [] ((delayed_count<=2))
-ltl acks_sent_progress: [] (<> ((acks_sent>0)))
-ltl completion: <> (((segments_sent==10)) && ((segments_acked==10)))
-  the model contains 4 never claims: completion, acks_sent_progress, max_two_delayed, eventual_ack_dack
-  only one claim is used in a verification run
-  choose which one with ./pan -a -N name (defaults to -N eventual_ack_dack)
-  or use e.g.: spin -search -ltl eventual_ack_dack /mnt/windows/Users/thego/Documents/Dev/github.com/4ry1337/TCP-AAD-Tests/formal_methods/models/tcp_default_dack.pml
