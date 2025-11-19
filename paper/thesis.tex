@@ -1,0 +1,969 @@
+%% bare_jrnl.tex
+%% V1.4b
+%% 2015/08/26
+%% by Michael Shell
+%% see http://www.michaelshell.org/
+%% for current contact information.
+%%
+%% This is a skeleton file demonstrating the use of IEEEtran.cls
+%% (requires IEEEtran.cls version 1.8b or later) with an IEEE
+%% journal paper.
+%%
+%% Support sites:
+%% http://www.michaelshell.org/tex/ieeetran/
+%% http://www.ctan.org/pkg/ieeetran
+%% and
+%% http://www.ieee.org/
+
+%%*************************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either expressed or
+%% implied; without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE! 
+%% User assumes all risk.
+%% In no event shall the IEEE or any contributor to this code be liable for
+%% any damages or losses, including, but not limited to, incidental,
+%% consequential, or any other damages, resulting from the use or misuse
+%% of any information contained here.
+%%
+%% All comments are the opinions of their respective authors and are not
+%% necessarily endorsed by the IEEE.
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%*************************************************************************
+
+% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
+% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
+% *** with production work. The IEEE's font choices and paper sizes can   ***
+% *** trigger bugs that do not appear when using other class files.       ***                          ***
+% The testflow support page is at:
+% http://www.michaelshell.org/tex/testflow/
+
+\documentclass[journal]{IEEEtran}
+%
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[journal]{../sty/IEEEtran}
+
+% Some very useful LaTeX packages include:
+% (uncomment the ones you want to load)
+
+% *** MISC UTILITY PACKAGES ***
+%
+%\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/pkg/ifpdf
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+% *** CITATION PACKAGES ***
+%
+%\usepackage{cite}
+% cite.sty was written by Donald Arseneau
+% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
+% \cite{} output to follow that of the IEEE. Loading the cite package will
+% result in citation numbers being automatically sorted and properly
+% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
+% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
+% \cite will automatically add leading space, if needed. Use cite.sty's
+% noadjust option (cite.sty V3.8 and later) if you want to turn this off
+% such as if a citation ever needs to be enclosed in parenthesis.
+% cite.sty is already installed on most LaTeX systems. Be sure and use
+% version 5.0 (2009-03-20) and later if using hyperref.sty.
+% The latest version can be obtained at:
+% http://www.ctan.org/pkg/cite
+% The documentation is contained in the cite.sty file itself.
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+  \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  \graphicspath{{figures/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation
+% can be obtained at: 
+% http://www.ctan.org/pkg/graphicx
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found at:
+% http://www.ctan.org/pkg/epslatex
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). The IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+% *** MATH PACKAGES ***
+%
+%\usepackage{amsmath}
+% A popular package from the American Mathematical Society that provides
+% many useful and powerful commands for dealing with mathematics.
+%
+% Note that the amsmath package sets \interdisplaylinepenalty to 10000
+% thus preventing page breaks from occurring within multiline equations. Use:
+%\interdisplaylinepenalty=2500
+% after loading amsmath to restore such page breaks as IEEEtran.cls normally
+% does. amsmath.sty is already installed on most LaTeX systems. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/pkg/amsmath
+
+% *** SPECIALIZED LIST PACKAGES ***
+%
+%\usepackage{algorithmic}
+% algorithmic.sty was written by Peter Williams and Rogerio Brito.
+% This package provides an algorithmic environment fo describing algorithms.
+% You can use the algorithmic environment in-text or within a figure
+% environment to provide for a floating algorithm. Do NOT use the algorithm
+% floating environment provided by algorithm.sty (by the same authors) or
+% algorithm2e.sty (by Christophe Fiorio) as the IEEE does not use dedicated
+% algorithm float types and packages that provide these will not provide
+% correct IEEE style captions. The latest version and documentation of
+% algorithmic.sty can be obtained at:
+% http://www.ctan.org/pkg/algorithms
+% Also of interest may be the (relatively newer and more customizable)
+% algorithmicx.sty package by Szasz Janos:
+% http://www.ctan.org/pkg/algorithmicx
+
+% *** ALIGNMENT PACKAGES ***
+%
+\usepackage{array}
+% Frank Mittelbach's and David Carlisle's array.sty patches and improves
+% the standard LaTeX2e array and tabular environments to provide better
+% appearance and additional user controls. As the default LaTeX2e table
+% generation code is lacking to the point of almost being broken with
+% respect to the quality of the end results, all users are strongly
+% advised to use an enhanced (at the very least that provided by array.sty)
+% set of table tools. array.sty is already installed on most systems. The
+% latest version and documentation can be obtained at:
+% http://www.ctan.org/pkg/array
+
+% IEEEtran contains the IEEEeqnarray family of commands that can be used to
+% generate multiline equations as well as matrices, tables, etc., of high
+% quality.
+
+% *** SUBFIGURE PACKAGES ***
+%\ifCLASSOPTIONcompsoc
+%  \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+%\else
+%  \usepackage[caption=false,font=footnotesize]{subfig}
+%\fi
+% subfig.sty, written by Steven Douglas Cochran, is the modern replacement
+% for subfigure.sty, the latter of which is no longer maintained and is
+% incompatible with some LaTeX packages including fixltx2e. However,
+% subfig.sty requires and automatically loads Axel Sommerfeldt's caption.sty
+% which will override IEEEtran.cls' handling of captions and this will result
+% in non-IEEE style figure/table captions. To prevent this problem, be sure
+% and invoke subfig.sty's "caption=false" package option (available since
+% subfig.sty version 1.3, 2005/06/28) as this is will preserve IEEEtran.cls
+% handling of captions.
+% Note that the Computer Society format requires a larger sans serif font
+% than the serif footnote size font used in traditional IEEE formatting
+% and thus the need to invoke different subfig.sty package options depending
+% on whether compsoc mode has been enabled.
+%
+% The latest version and documentation of subfig.sty can be obtained at:
+% http://www.ctan.org/pkg/subfig
+
+% *** FLOAT PACKAGES ***
+%
+%\usepackage{fixltx2e}
+% fixltx2e, the successor to the earlier fix2col.sty, was written by
+% Frank Mittelbach and David Carlisle. This package corrects a few problems
+% in the LaTeX2e kernel, the most notable of which is that in current
+% LaTeX2e releases, the ordering of single and double column floats is not
+% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
+% single column figure to be placed prior to an earlier double column
+% figure.
+% Be aware that LaTeX2e kernels dated 2015 and later have fixltx2e.sty's
+% corrections already built into the system in which case a warning will
+% be issued if an attempt is made to load fixltx2e.sty as it is no longer
+% needed.
+% The latest version and documentation can be found at:
+% http://www.ctan.org/pkg/fixltx2e
+
+\usepackage{stfloats}
+% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
+% the ability to do double column floats at the bottom of the page as well
+% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
+% LaTeX2e). It also provides a command:
+%\fnbelowfloat
+% to enable the placement of footnotes below bottom floats (the standard
+% LaTeX2e kernel puts them above bottom floats). This is an invasive package
+% which rewrites many portions of the LaTeX2e float routines. It may not work
+% with other packages that modify the LaTeX2e float routines. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/pkg/stfloats
+% Do not use the stfloats baselinefloat ability as the IEEE does not allow
+% \baselineskip to stretch. Authors submitting work to the IEEE should note
+% that the IEEE rarely uses double column equations and that authors should try
+% to avoid such use. Do not be tempted to use the cuted.sty or midfloat.sty
+% packages (also by Sigitas Tolusis) as the IEEE does not format its papers in
+% such ways.
+% Do not attempt to use stfloats with fixltx2e as they are incompatible.
+% Instead, use Morten Hogholm'a dblfloatfix which combines the features
+% of both fixltx2e and stfloats:
+%
+% \usepackage{dblfloatfix}
+% The latest version can be found at:
+% http://www.ctan.org/pkg/dblfloatfix
+
+%\ifCLASSOPTIONcaptionsoff
+%  \usepackage[nomarkers]{endfloat}
+% \let\MYoriglatexcaption\caption
+% \renewcommand{\caption}[2][\relax]{\MYoriglatexcaption[#2]{#2}}
+%\fi
+% endfloat.sty was written by James Darrell McCauley, Jeff Goldberg and 
+% Axel Sommerfeldt. This package may be useful when used in conjunction with 
+% IEEEtran.cls'  captionsoff option. Some IEEE journals/societies require that
+% submissions have lists of figures/tables at the end of the paper and that
+% figures/tables without any captions are placed on a page by themselves at
+% the end of the document. If needed, the draftcls IEEEtran class option or
+% \CLASSINPUTbaselinestretch interface can be used to increase the line
+% spacing as well. Be sure and use the nomarkers option of endfloat to
+% prevent endfloat from "marking" where the figures would have been placed
+% in the text. The two hack lines of code above are a slight modification of
+% that suggested by in the endfloat docs (section 8.4.1) to ensure that
+% the full captions always appear in the list of figures/tables - even if
+% the user used the short optional argument of \caption[]{}.
+% IEEE papers do not typically make use of \caption[]'s optional argument,
+% so this should not be an issue. A similar trick can be used to disable
+% captions of packages such as subfig.sty that lack options to turn off
+% the subcaptions:
+% For subfig.sty:
+% \let\MYorigsubfloat\subfloat
+% \renewcommand{\subfloat}[2][\relax]{\MYorigsubfloat[]{#2}}
+% However, the above trick will not work if both optional arguments of
+% the \subfloat command are used. Furthermore, there needs to be a
+% description of each subfigure *somewhere* and endfloat does not add
+% subfigure captions to its list of figures. Thus, the best approach is to
+% avoid the use of subfigure captions (many IEEE journals avoid them anyway)
+% and instead reference/explain all the subfigures within the main caption.
+% The latest version of endfloat.sty and its documentation can obtained at:
+% http://www.ctan.org/pkg/endfloat
+%
+% The IEEEtran \ifCLASSOPTIONcaptionsoff conditional can also be used
+% later in the document, say, to conditionally put the References on a 
+% page by themselves.
+
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+%
+%\usepackage{url}
+% url.sty was written by Donald Arseneau. It provides better support for
+% handling and breaking URLs. url.sty is already installed on most LaTeX
+% systems. The latest version and documentation can be obtained at:
+% http://www.ctan.org/pkg/url
+% Basically, \url{my_url_here}.
+
+% *** Do not adjust lengths that control margins, column widths, etc. ***
+% *** Do not use packages that alter fonts (such as pslatex).         ***
+% There should be no need to do such things with IEEEtran.cls V1.6 and later.
+% (Unless specifically asked to do so by the journal or conference you plan
+% to submit to, of course. )
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+%
+% paper title
+% Titles are generally capitalized except for words such as a, an, and, as,
+% at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
+% not capitalized unless they are the first or last word of the title.
+% Linebreaks \\ can be used within to get better formatting as desired.
+% Do not put math or special symbols in the title.
+\title{Experiments with TCP over WiFi}
+%
+%
+% author names and IEEE memberships
+% note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
+% a structure at a ~ so this keeps an author's name from being broken across
+% two lines.
+% use \thanks{} to gain access to the first footnote area
+% a separate \thanks must be used for each paragraph as LaTeX2e's \thanks
+% was not built to handle multiple paragraphs
+%
+
+\author{Rakhat~Yskak
+% ~\IEEEmembership{Member,~NU,}% <-this % stops a space
+% \thanks{M. Shell was with the Department
+% of Electrical and Computer Engineering, Georgia Institute of Technology, Atlanta,
+% GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}% <-this % stops a space
+% \thanks{J. Doe and J. Doe are with Anonymous University.}% <-this % stops a space
+% \thanks{Manuscript received April 19, 2005; revised August 26, 2015.}
+}
+
+% note the % following the last \IEEEmembership and also \thanks - 
+% these prevent an unwanted space from occurring between the last author name
+% and the end of the author line. i.e., if you had this:
+% 
+% \author{....lastname \thanks{...} \thanks{...} }
+%                     ^------------^------------^----Do not want these spaces!
+%
+% a space would be appended to the last name and could cause every name on that
+% line to be shifted left slightly. This is one of those "LaTeX things". For
+% instance, "\textbf{A} \textbf{B}" will typeset as "A B" not "AB". To get
+% "AB" then you have to do: "\textbf{A}\textbf{B}"
+% \thanks is no different in this regard, so shield the last } of each \thanks
+% that ends a line with a % and do not let a space in before the next \thanks.
+% Spaces after \IEEEmembership other than the last one are OK (and needed) as
+% you are supposed to have spaces between the names. For what it is worth,
+% this is a minor point as most people would not even notice if the said evil
+% space somehow managed to creep in.
+
+% % The paper headers
+% \markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}%
+% {Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for IEEE Journals}
+% % The only time the second header will appear is for the odd numbered pages
+% % after the title page when using the twoside option.
+% % 
+% % *** Note that you probably will NOT want to include the author's ***
+% % *** name in the headers of peer review papers.                   ***
+% % You can use \ifCLASSOPTIONpeerreview for conditional compilation here if
+% % you desire.
+
+% If you want to put a publisher's ID mark on the page you can do it like
+% this:
+%\IEEEpubid{0000--0000/00\$00.00~\copyright~2015 IEEE}
+% Remember, if you use this you must call \IEEEpubidadjcol in the second
+% column for its text to clear the IEEEpubid mark.
+
+
+
+% use for special paper notices
+%\IEEEspecialpapernotice{(Invited Paper)}
+
+\maketitle
+
+% As a general rule, do not put math, special symbols or citations
+% in the abstract or keywords.
+% \begin{abstract}
+% The abstract goes here.
+% \end{abstract}
+
+% Note that keywords are not normally used for peerreview papers.
+\begin{IEEEkeywords}
+TCP, WiFi, Tests, Frame Aggregation.
+\end{IEEEkeywords}
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+
+
+% \section{Introduction}
+% % The very first letter is a 2 line initial drop letter followed
+% % by the rest of the first word in caps.
+% % 
+% % form to use if the first word consists of a single letter:
+% % \IEEEPARstart{A}{demo} file is ....
+% % 
+% % form to use if you need the single drop letter followed by
+% % normal text (unknown if ever used by the IEEE):
+% % \IEEEPARstart{A}{}demo file is ....
+% % 
+% % Some journals put the first two words in caps:
+% % \IEEEPARstart{T}{his demo} file is ....
+% % 
+% % Here we have the typical use of a "T" for an initial drop letter
+% % and "HIS" in caps to complete the first word.
+% \IEEEPARstart{T}{his} demo file is intended to serve as a ``starter file''
+% for IEEE journal papers produced under \LaTeX\ using
+% IEEEtran.cls version 1.8b and later.
+% % You must have at least 2 lines in the paragraph with the drop letter
+% % (should never be an issue)
+% I wish you the best of success.
+
+% \hfill mds
+ 
+% \hfill August 26, 2015
+
+% \subsection{Subsection Heading Here}
+% Subsection text here.
+
+% % needed in second column of first page if using \IEEEpubid
+% %\IEEEpubidadjcol
+
+% \subsubsection{Subsubsection Heading Here}
+% Subsubsection text here.
+
+
+% An example of a floating figure using the graphicx package.
+% Note that \label must occur AFTER (or within) \caption.
+% For figures, \caption should occur after the \includegraphics.
+% Note that IEEEtran v1.7 and later has special internal code that
+% is designed to preserve the operation of \label within \caption
+% even when the captionsoff option is in effect. However, because
+% of issues like this, it may be the safest practice to put all your
+% \label just after \caption rather than within \caption{}.
+%
+% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
+% option should be used if it is desired that the figures are to be
+% displayed while in draft mode.
+%
+%\begin{figure}[!t]
+%\centering
+%\includegraphics[width=2.5in]{myfigure}
+% where an .eps filename suffix will be assumed under latex, 
+% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+% via \DeclareGraphicsExtensions.
+%\caption{Simulation results for the network.}
+%\label{fig_sim}
+%\end{figure}
+
+% Note that the IEEE typically puts floats only at the top, even when this
+% results in a large percentage of a column being occupied by floats.
+
+
+% An example of a double column floating figure using two subfigures.
+% (The subfig.sty package must be loaded for this to work.)
+% The subfigure \label commands are set within each subfloat command,
+% and the \label for the overall figure must come after \caption.
+% \hfil is used as a separator to get equal spacing.
+% Watch out that the combined width of all the subfigures on a 
+% line do not exceed the text width or a line break will occur.
+%
+%\begin{figure*}[!t]
+%\centering
+%\subfloat[Case I]{\includegraphics[width=2.5in]{box}%
+%\label{fig_first_case}}
+%\hfil
+%\subfloat[Case II]{\includegraphics[width=2.5in]{box}%
+%\label{fig_second_case}}
+%\caption{Simulation results for the network.}
+%\label{fig_sim}
+%\end{figure*}
+%
+% Note that often IEEE papers with subfigures do not employ subfigure
+% captions (using the optional argument to \subfloat[]), but instead will
+% reference/describe all of them (a), (b), etc., within the main caption.
+% Be aware that for subfig.sty to generate the (a), (b), etc., subfigure
+% labels, the optional argument to \subfloat must be present. If a
+% subcaption is not desired, just leave its contents blank,
+% e.g., \subfloat[].
+
+
+% An example of a floating table. Note that, for IEEE style tables, the
+% \caption command should come BEFORE the table and, given that table
+% captions serve much like titles, are usually capitalized except for words
+% such as a, an, and, as, at, but, by, for, in, nor, of, on, or, the, to
+% and up, which are usually not capitalized unless they are the first or
+% last word of the caption. Table text will default to \footnotesize as
+% the IEEE normally uses this smaller font for tables.
+% The \label must come after \caption as always.
+%
+%\begin{table}[!t]
+%% increase table row spacing, adjust to taste
+%\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+%\caption{An Example of a Table}
+%\label{table_example}
+%\centering
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+%\begin{tabular}{|c||c|}
+%\hline
+%One & Two\\
+%\hline
+%Three & Four\\
+%\hline
+%\end{tabular}
+%\end{table}
+
+
+% Note that the IEEE does not put floats in the very first column
+% - or typically anywhere on the first page for that matter. Also,
+% in-text middle ("here") positioning is typically not used, but it
+% is allowed and encouraged for Computer Society conferences (but
+% not Computer Society journals). Most IEEE journals/conferences use
+% top floats exclusively. 
+% Note that, LaTeX2e, unlike IEEE journals/conferences, places
+% footnotes above bottom floats. This can be corrected via the
+% \fnbelowfloat command of the stfloats package.
+
+
+\section{Literature Review}
+
+
+Avkhadeev evaluated delayed acknowledgment schemes in Transmission Control Protocol (TCP) over Wi-Fi \cite{avkhadeev_2025}. He implemented TCP-Adaptive Acknowledgment Delay (TCP-AAD) in a Linux kernel. Simulations revealed that adaptive delays based on packet inter-arrival times improve throughput. This work identified optimal delay windows to balance acknowledgment overhead and burst-induced losses.
+
+TCP stands as the key protocol for reliable online data transfer. It ensures packets arrive correctly and in sequence. Early standards established its core principles.
+
+\subsection{TCP Basics}
+
+RFC 793 defines TCP's essential mechanisms \cite{rfc793}. It explains connection establishment through a three-way handshake. Senders transmit segments with sequence numbers to track order. Receivers use acknowledgments to signal successful delivery. This setup provides reliability over unreliable networks.
+
+RFC 1122 enhances these foundations for internet hosts \cite{rfc1122}. It addresses implementation details like handling fragmented packets. The document also covers requirements for robust error detection. These refinements help TCP operate effectively in complex environments.
+
+\subsection{Congestion Management}
+
+Excess traffic can overwhelm networks. RFC 896 introduced congestion control concepts in IP/TCP systems \cite{rfc896}. It described scenarios where unchecked growth leads to collapse. The memo emphasized the need for senders to react to network signals.
+
+Modern TCP employs specific algorithms to manage load. RFC 5681 specifies slow start to gradually increase sending rates \cite{rfc5681}. Congestion avoidance follows to maintain steady flow. Fast retransmit and recovery handle detected losses quickly. These methods prevent persistent overload.
+
+RFC 2018 introduces selective acknowledgments (SACK) \cite{rfc2018}. This option lets receivers specify received segments precisely. Senders can retransmit only missing parts. SACK improves efficiency during bursts of losses.
+
+CUBIC targets high-bandwidth, long-delay paths. RFC 8312 outlines its cubic function for window growth \cite{rfc8312}. This approach achieves better scalability than traditional linear methods. CUBIC maintains stability while probing for available capacity.
+
+\subsection{High-Performance Additions}
+
+Paths with large bandwidth-delay products require expanded capabilities. RFC 7323 defines the window scale option to support bigger receive windows \cite{rfc7323}. It also introduces timestamps for accurate round-trip time measurement. Timestamps enable protection against wrapped sequence numbers in fast networks.
+
+These extensions allow TCP to utilize high-speed links fully. Larger windows prevent underuse of capacity. Timestamps aid in distinguishing old duplicates from new data.
+
+\subsection{Wireless Issues}
+
+Wireless environments pose unique challenges. Links suffer from bit errors and interference. Balakrishnan et al. evaluated techniques to boost TCP over wireless \cite{balakrishnan_1997}. They compared end-to-end, link-layer, and split-connection approaches. Link-layer retransmissions proved effective in hiding losses from TCP.
+
+Xylomenos et al. provided an overview of TCP/IP performance in wireless networks \cite{xylomenos_2002}. They discussed how random errors trigger unnecessary congestion responses. The paper highlighted the need for adaptations to distinguish error types.
+
+Pokhrel et al. developed a model for TCP over Wi-Fi \cite{pokhrel_2016}. It accounts for both buffer overflows and channel losses. Their analysis reveals interactions between these factors. The model predicts throughput under varying conditions.
+
+\subsection{Delayed Acknowledgments}
+
+Delayed acknowledgments reduce control traffic. Receivers delay responses to batch confirmations.
+
+Altman and Jim\'enez proposed innovative delayed ACK methods for multihop wireless networks \cite{altman_2003}. They introduced variable delay coefficients based on sequence numbers. Simulations showed substantial throughput gains from ACK thinning.
+
+Chen et al. investigated TCP with delayed ACK in wireless settings \cite{chen_2008}. They observed that unrestricted delays do not always help. Optimal window sizes depend on path lengths. Longer paths increase interference from bursty transmissions.
+
+Avkhadeev assessed delayed acknowledgment schemes over Wi-Fi \cite{avkhadeev_2025}. He implemented TCP-AAD in a Linux kernel. The work evaluated performance through simulations. Results indicated adaptive delays improve throughput in various scenarios.
+
+\subsection{Wi-Fi Advances}
+
+IEEE 802.11n introduced enhancements for higher throughput. Xiao described features like MIMO and channel bonding \cite{xiao_2005}. MIMO uses multiple antennas to increase data rates. Bonding combines channels for wider bandwidth.
+
+Deek et al. analyzed channel bonding's effects on 802.11n networks \cite{deek_2011}. They found wider channels boost capacity but heighten interference. The study emphasized careful management for optimal performance.
+
+Saha et al. examined power and throughput tradeoffs in 802.11n/ac smartphones \cite{saha_2015}. Higher features like MIMO consume more energy. Their experiments highlighted balances needed for mobile devices.
+
+\subsection{Summary of Literature}
+
+Table \ref{table_lit_summary} summarizes the reviewed works. It lists each reference with its publication year. The table details key contributions and their ties to this thesis. Entries group into categories like fundamentals, congestion control, wireless challenges, delayed ACKs, and Wi-Fi enhancements. This structure shows the progression from basic TCP to specific Wi-Fi optimizations. The table aids quick reference to foundational and advanced sources.
+
+This thesis extends Avkhadeev's simulation-based evaluation \cite{avkhadeev_2025}. It applies the delayed ACK scheme in real hardware setups. Tools like tc control traffic shaping. iperf measures throughput in client-server tests.
+
+\begin{table*}[!t]
+\caption{Summary of Key Literature on TCP over Wi-Fi}
+\label{table_lit_summary}
+\centering
+\begin{tabular}{|p{3cm}|c|p{5cm}|p{5cm}|}
+\hline
+\textbf{Reference} & \textbf{Year} & \textbf{Key Contributions} & \textbf{Relevance to Thesis} \\
+\hline
+Avkhadeev \cite{avkhadeev_2025} & 2025 & Evaluates delayed ACK schemes, implements TCP-AAD in Linux. & Basis for real-world testing in this thesis. \\
+\hline
+RFC 793 \cite{rfc793} & 1981 & Defines core TCP mechanisms like acknowledgments and retransmissions. & Provides foundational understanding of TCP behavior. \\
+\hline
+RFC 1122 \cite{rfc1122} & 1989 & Specifies host requirements for TCP/IP, refining protocol operations. & Ensures compliance in experimental setups. \\
+\hline
+RFC 896 \cite{rfc896} & 1984 & Introduces congestion control principles in TCP/IP networks. & Basis for handling congestion in Wi-Fi experiments. \\
+\hline
+RFC 5681 \cite{rfc5681} & 2009 & Standardizes TCP congestion control algorithms. & Guides implementation of congestion avoidance in tests. \\
+\hline
+RFC 2018 \cite{rfc2018} & 1996 & Introduces Selective Acknowledgments (SACK) for better loss recovery. & Enhances TCP resilience over error-prone Wi-Fi links. \\
+\hline
+RFC 7323 \cite{rfc7323} & 2014 & Extensions for high-performance TCP, e.g., larger windows. & Supports high-throughput experiments over Wi-Fi. \\
+\hline
+RFC 8312 \cite{rfc8312} & 2018 & CUBIC algorithm for fast long-distance networks. & Potential alternative congestion control for Wi-Fi scenarios. \\
+\hline
+Balakrishnan et al. \cite{balakrishnan_1997} & 1997 & Compares mechanisms for TCP improvement over wireless links. & Identifies challenges like packet loss in Wi-Fi. \\
+\hline
+Xylomenos et al. \cite{xylomenos_2002} & 2002 & Overview of TCP/IP performance issues in wireless networks. & Contextualizes TCP pitfalls in Wi-Fi environments. \\
+\hline
+Pokhrel et al. \cite{pokhrel_2016} & 2016 & Models TCP throughput considering buffer and channel losses in Wi-Fi. & Aids in predicting performance in real scenarios. \\
+\hline
+Altman and Jim\'enez \cite{altman_2003} & 2003 & Novel delayed ACK techniques for multihop wireless networks. & Builds on delayed ACK for performance gains. \\
+\hline
+Chen et al. \cite{chen_2008} & 2008 & TCP with delayed ACK optimized for wireless networks. & Directly relates to extending delayed ACK schemes. \\
+\hline
+Xiao \cite{xiao_2005} & 2005 & Enhancements in IEEE 802.11n for higher Wi-Fi throughput. & Informs hardware considerations in experiments. \\
+\hline
+Deek et al. \cite{deek_2011} & 2011 & Impact of channel bonding on 802.11n management. & Highlights Wi-Fi configuration effects on TCP. \\
+\hline
+Saha et al. \cite{saha_2015} & 2015 & Power-throughput tradeoffs in 802.11n/ac for smartphones. & Considers energy aspects in mobile Wi-Fi tests. \\
+\hline
+\end{tabular}
+\end{table*}
+
+\section{Methodology}
+
+This section describes the experimental setup, test parameters, data collection procedures, and analysis methods used to evaluate TCP-AAD performance over Wi-Fi networks.
+
+\subsection{Experimental Setup}
+
+The experiments employ a controlled three-node topology consisting of a client, server, and wireless router. Figure~\ref{fig:topology} illustrates the network architecture.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{figures/topology.pdf}
+\caption{Experimental network topology. The client connects via Ethernet to perform traffic shaping with tc, while the server connects over WiFi to measure TCP performance. The router runs OpenWRT with configurable WiFi rate control.}
+\label{fig:topology}
+\end{figure}
+
+The client machine connects to the network via Ethernet interface (enp7s0) at IP address 192.168.1.50. This wired connection ensures stable baseline conditions for initiating TCP flows. The client runs iperf3 in client mode to generate TCP traffic.
+
+The server machine connects wirelessly through interface wlan0 at IP address 192.168.1.165. This placement allows direct measurement of TCP performance over the Wi-Fi link. The server executes iperf3 in server mode to receive and measure incoming traffic on port 5201.
+
+The wireless router operates at IP address 192.168.1.1. It runs an OpenWRT-based firmware that provides fine-grained control over Wi-Fi parameters. The router configuration enables manipulation of transmission rates through the mac80211 wireless subsystem.
+
+Both client and server machines run Linux with kernel version 5.15 or later. The server can boot into two kernel variants: the standard Linux kernel or a modified kernel implementing TCP-AAD. This dual-boot capability enables direct comparison between conventional TCP behavior and the adaptive acknowledgment scheme.
+
+\subsection{Experimental Parameters}
+
+The experiments systematically vary multiple factors to characterize TCP-AAD performance across diverse network conditions. Table~\ref{table:parameters} summarizes the test parameters and their values.
+
+\begin{table}[!t]
+\caption{Experimental Parameters and Values}
+\label{table:parameters}
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Parameter} & \textbf{Values} \\
+\hline
+Kernel Variant & Default, TCP-AAD \\
+\hline
+Bandwidth Limit & 20, 50, 100 Mbps, unlimited \\
+\hline
+Network Delay & 10, 50, 100 ms, no delay \\
+\hline
+WiFi Rate (HT20) & MCS 4, 5, 6, 12, 13, 14 \\
+\hline
+WiFi Rate (HT40) & MCS 4, 5, 6, 12, 13, 14 \\
+\hline
+Iterations & 3 per configuration \\
+\hline
+Test Duration & 30 seconds \\
+\hline
+Total Tests & 1152 (576 per kernel) \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Kernel Variants}
+
+Tests run with two kernel configurations on the server:
+
+\begin{itemize}
+\item \textbf{Default kernel}: Standard Linux TCP implementation without modifications
+\item \textbf{TCP-AAD kernel}: Modified implementation with adaptive acknowledgment delays based on packet inter-arrival times
+\end{itemize}
+
+\subsubsection{Bandwidth Limits}
+
+Traffic shaping controls the available bandwidth at the client interface. Four bandwidth settings capture different network capacity scenarios:
+
+\begin{itemize}
+\item 20 Mbps: Simulates constrained mobile or rural broadband
+\item 50 Mbps: Represents moderate residential connections
+\item 100 Mbps: Models high-speed residential or enterprise access
+\item Unlimited (nolim): No artificial bandwidth constraint
+\end{itemize}
+
+\subsubsection{Network Delays}
+
+Artificial delays emulate varying propagation times and queuing delays. Four delay configurations span typical wireless scenarios:
+
+\begin{itemize}
+\item 10 ms: Local area network or short-distance wireless
+\item 50 ms: Regional or moderate-distance connections
+\item 100 ms: Long-distance or satellite-like delays
+\item No delay (nodelay): Zero added latency beyond natural propagation
+\end{itemize}
+
+\subsubsection{Wi-Fi Transmission Rates}
+
+The router fixes transmission rates to isolate rate adaptation effects. Twelve rate indices cover combinations of channel width and modulation coding scheme (MCS):
+
+\begin{itemize}
+\item \textbf{HT20 configurations}: 20 MHz channels with MCS 4, 5, 6, 12, 13, 14
+\item \textbf{HT40 configurations}: 40 MHz channels with MCS 4, 5, 6, 12, 13, 14
+\end{itemize}
+
+These rates span different spatial stream counts (single and dual stream) and modulation schemes. HT20 rates range from approximately 13 to 104 Mbps, while HT40 rates extend up to 216 Mbps under ideal conditions.
+
+\subsubsection{Iterations}
+
+Each unique configuration runs three times to capture performance variability. Multiple iterations enable statistical analysis and identification of outliers.
+
+The complete parameter matrix yields $2 \times 4 \times 4 \times 12 \times 3 = 1152$ total tests (2 kernels, 4 bandwidths, 4 delays, 12 rates, 3 iterations).
+
+\subsection{Test Procedure}
+
+An automated script orchestrates the experiment execution. The script iterates through all parameter combinations in a systematic manner.
+
+For each configuration, the procedure follows these steps:
+
+\begin{enumerate}
+\item \textbf{Router rate configuration}: The script establishes an SSH connection to the router and sets the fixed transmission rate via the mac80211 debugfs interface. The command writes the rate index to \texttt{/sys/kernel/debug/ieee80211/phy1/rc/fixed\_rate\_idx}.
+
+\item \textbf{Settlement delay}: The system waits 3 seconds after setting the rate to allow the wireless interface to stabilize on the new transmission parameters.
+
+\item \textbf{Traffic shaping application}: The script applies bandwidth limits and delays on the client's Ethernet interface using Linux Traffic Control (tc). For bandwidth limiting, it employs the Token Bucket Filter (tbf) qdisc. For delay injection, it uses the Network Emulator (netem) qdisc. When both constraints apply, the script creates a hierarchical configuration with tbf as the root and netem as a child qdisc.
+
+\item \textbf{Pre-test metadata capture}: Before the throughput test begins, the script collects system state information including WiFi station statistics from the router, TCP socket parameters from the server, and kernel version details. This metadata aids in validating test conditions and diagnosing anomalies.
+
+\item \textbf{Throughput measurement}: The client initiates a 30-second iperf3 TCP transfer to the server. The tool measures instantaneous and aggregate throughput, retransmission counts, and other TCP metrics. Results save in JSON format for structured parsing.
+
+\item \textbf{Traffic shaping removal}: The script removes all tc rules from the client interface to restore normal operation.
+
+\item \textbf{Inter-test delay}: A 5-second pause separates consecutive tests to allow TCP connections to close completely and queues to drain.
+\end{enumerate}
+
+All test outputs, including iperf3 JSON files, metadata snapshots, and execution logs, store in a hierarchical directory structure organized by kernel type and configuration parameters.
+
+\subsection{Data Collection}
+
+The experimental framework captures multiple data streams to enable comprehensive analysis.
+
+\subsubsection{Throughput Metrics}
+
+iperf3 records detailed performance statistics in JSON format. Key metrics include:
+
+\begin{itemize}
+\item \textbf{Bits per second}: Achieved goodput averaged over the test duration
+\item \textbf{Bytes transferred}: Total payload successfully delivered
+\item \textbf{Retransmissions}: Count of TCP segment retransmissions indicating packet loss
+\item \textbf{Test duration}: Actual elapsed time for the transfer
+\end{itemize}
+
+\subsubsection{Wireless Statistics}
+
+The router provides Wi-Fi layer information through the iw utility and debugfs interfaces:
+
+\begin{itemize}
+\item \textbf{Station dump}: Connection quality metrics including signal strength, transmission rate, and frame statistics
+\item \textbf{Rate control status}: Current fixed rate index confirming correct configuration
+\end{itemize}
+
+\subsubsection{Transport Layer State}
+
+The ss (socket statistics) command on the server captures TCP connection parameters:
+
+\begin{itemize}
+\item \textbf{Congestion window (cwnd)}: Current sending window size
+\item \textbf{Round-trip time (RTT)}: Smoothed and variance measurements
+\item \textbf{Receiver window}: Advertised window from the client
+\end{itemize}
+
+\subsubsection{Test Metadata}
+
+Each test generates a metadata file containing:
+
+\begin{itemize}
+\item Timestamp of execution
+\item Kernel variant identifier
+\item Configuration parameters (bandwidth, delay, rate, iteration)
+\item System state snapshots
+\end{itemize}
+
+This metadata enables precise correlation between test conditions and observed performance.
+
+\subsection{Data Analysis}
+
+Python scripts process the collected data to extract insights and generate visualizations.
+
+\subsubsection{Result Parsing}
+
+The analysis pipeline begins by parsing iperf3 JSON output files. A custom parser extracts throughput, retransmission, and timing metrics from the end-of-test summaries. File naming conventions encode test parameters, allowing automatic association of results with experimental conditions.
+
+\subsubsection{Aggregation and Statistics}
+
+Results group by configuration tuple (bandwidth, delay, rate). For each configuration, the analysis computes:
+
+\begin{itemize}
+\item \textbf{Mean throughput}: Average across iterations
+\item \textbf{Standard deviation}: Measure of performance variability
+\item \textbf{Median throughput}: Robust central tendency metric
+\item \textbf{Retransmission rate}: Average packet loss indicator
+\end{itemize}
+
+\subsubsection{Comparative Analysis}
+
+The comparison module pairs results from TCP-AAD and default kernel tests under identical conditions. For each configuration, it calculates:
+
+\begin{itemize}
+\item \textbf{Throughput ratio}: TCP-AAD performance relative to default
+\item \textbf{Absolute improvement}: Difference in Mbps
+\item \textbf{Percentage gain}: Relative performance change
+\end{itemize}
+
+\subsubsection{Visualization}
+
+Plotting scripts generate publication-quality figures including:
+
+\begin{itemize}
+\item \textbf{Bar charts}: Throughput comparisons across rate configurations
+\item \textbf{Heatmaps}: Performance across bandwidth-delay matrices
+\item \textbf{Box plots}: Distribution of results showing variability
+\item \textbf{Time series}: Per-second throughput evolution during tests
+\end{itemize}
+
+These visualizations facilitate identification of trends, optimal configurations, and performance boundaries.
+
+The systematic methodology ensures reproducible measurements and enables rigorous evaluation of TCP-AAD effectiveness across the parameter space representative of real-world Wi-Fi deployments.
+
+% \section{Conclusion}
+% The conclusion goes here.
+
+
+% % if have a single appendix:
+% %\appendix[Proof of the Zonklar Equations]
+% % or
+% %\appendix  % for no appendix heading
+% % do not use \section anymore after \appendix, only \section*
+% % is possibly needed
+
+% % use appendices with more than one appendix
+% % then use \section to start each appendix
+% % you must declare a \section before using any
+% % \subsection or using \label (\appendices by itself
+% % starts a section numbered zero.)
+% %
+
+
+% \appendices
+% \section{Proof of the First Zonklar Equation}
+% Appendix one text goes here.
+
+% % you can choose not to have a title for an appendix
+% % if you want by leaving the argument blank
+% \section{}
+% Appendix two text goes here.
+
+
+% % use section* for acknowledgment
+% \section*{Acknowledgment}
+
+
+% The authors would like to thank...
+
+
+% Can use something like this to put references on a page
+% by themselves when using endfloat and the captionsoff option.
+\ifCLASSOPTIONcaptionsoff
+  \newpage
+\fi
+
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://mirror.ctan.org/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+% \begin{thebibliography}{16}
+
+% \bibitem{IEEEhowto:kopka}
+% H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
+%   0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+
+\bibliographystyle{ieeetr}
+\bibliography{ref}
+
+% \end{thebibliography}
+
+% % biography section
+% % 
+% % If you have an EPS/PDF photo (graphicx package needed) extra braces are
+% % needed around the contents of the optional argument to biography to prevent
+% % the LaTeX parser from getting confused when it sees the complicated
+% % \includegraphics command within an optional argument. (You could create
+% % your own custom macro containing the \includegraphics command to make things
+% % simpler here.)
+% %\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
+% % or if you just want to reserve a space for a photo:
+
+% \begin{IEEEbiography}{Michael Shell}
+% Biography text here.
+% \end{IEEEbiography}
+
+% % if you will not have a photo at all:
+% \begin{IEEEbiographynophoto}{John Doe}
+% Biography text here.
+% \end{IEEEbiographynophoto}
+
+% % insert where needed to balance the two columns on the last page with
+% % biographies
+% %\newpage
+
+% \begin{IEEEbiographynophoto}{Jane Doe}
+% Biography text here.
+% \end{IEEEbiographynophoto}
+
+% % You can push biographies down or up by placing
+% % a \vfill before or after them. The appropriate
+% % use of \vfill depends on what kind of text is
+% % on the last page and whether or not the columns
+% % are being equalized.
+
+% %\vfill
+
+% % Can be used to pull up biographies so that the bottom of the last one
+% % is flush with the other column.
+% %\enlargethispage{-5in}
+
+\end{document}

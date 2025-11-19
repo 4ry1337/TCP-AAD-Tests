@@ -1,0 +1,117 @@
+direction: right
+
+client: {
+  shape: rectangle
+  style: {
+    fill: "#e3f2fd"
+    stroke: "#1976d2"
+    stroke-width: 2
+  }
+  label: "Client\n192.168.1.50"
+  interface: "enp7s0 (Ethernet)" {
+    shape: circle
+    style.fill: "#fff9c4"
+  }
+  role: "iperf3 client\nTraffic shaping (tc)" {
+    shape: text
+    style.font-size: 11
+  }
+}
+
+router: {
+  shape: rectangle
+  style: {
+    fill: "#f3e5f5"
+    stroke: "#7b1fa2"
+    stroke-width: 2
+  }
+  label: "WiFi Router\n192.168.1.1"
+
+  wifi_radio: "WiFi Radio\n(mac80211)" {
+    shape: circle
+    style.fill: "#fff9c4"
+  }
+
+  features: "OpenWRT\nFixed rate control\nHT20/HT40 MCS" {
+    shape: text
+    style.font-size: 11
+  }
+}
+
+server: {
+  shape: rectangle
+  style: {
+    fill: "#e8f5e9"
+    stroke: "#388e3c"
+    stroke-width: 2
+  }
+  label: "Server\n192.168.1.165"
+  interface: "wlan0 (WiFi)" {
+    shape: circle
+    style.fill: "#fff9c4"
+  }
+  kernel: "Linux Kernel\n(Default / TCP-AAD)" {
+    shape: text
+    style.font-size: 11
+  }
+  service: "iperf3 server\nPort 5201" {
+    shape: text
+    style.font-size: 11
+  }
+}
+
+# Connections
+client.interface -> router.wifi_radio: {
+  label: "Ethernet\n(Wired)"
+  style: {
+    stroke: "#1976d2"
+    stroke-width: 3
+  }
+}
+
+router.wifi_radio -> server.interface: {
+  label: "802.11n WiFi\n(Wireless)"
+  style: {
+    stroke: "#f57c00"
+    stroke-width: 3
+    stroke-dash: 5
+  }
+}
+
+# TCP flow indicator
+flow: "TCP Traffic Flow →" {
+  shape: text
+  style: {
+    font-size: 14
+    bold: true
+    fill: "#d32f2f"
+  }
+  near: top-center
+}
+
+# Legend
+legend: {
+  shape: rectangle
+  style: {
+    fill: "#fafafa"
+    stroke: "#999"
+    stroke-width: 1
+  }
+
+  title: "Legend:" {
+    shape: text
+    style.bold: true
+  }
+
+  wired: "━━━  Wired (Ethernet)" {
+    shape: text
+    style.font-size: 10
+  }
+
+  wireless: "┄┄┄  Wireless (WiFi)" {
+    shape: text
+    style.font-size: 10
+  }
+
+  near: bottom-center
+}
