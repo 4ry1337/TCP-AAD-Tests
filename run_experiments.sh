@@ -40,7 +40,7 @@ SERVER_KERNEL=$(get_server_kernel)
 log_info "Server kernel version: ${SERVER_KERNEL}"
 TOTAL_TESTS=$(calculate_total_tests)
 log_info "Total tests to run: ${TOTAL_TESTS}"
-ESTIMATED_SECONDS=$((TOTAL_TESTS * (TEST_DURATION + SETTLE_TIME + RATE_SLEEP_TIME)))
+ESTIMATED_SECONDS=$((TOTAL_TESTS * (IPERF_TEST_DURATION + SETTLE_TIME + RATE_SLEEP_TIME)))
 ESTIMATED_DURATION=$(format_duration ${ESTIMATED_SECONDS})
 log_info "Estimated duration: ${ESTIMATED_DURATION}"
 
@@ -72,7 +72,7 @@ for bw in "${BANDWIDTHS[@]}"; do
             fi
 
             # Wait for router to settle on new rate
-            sleep ${RATE_SETTLE_TIME}
+            sleep ${RATE_SLEEP_TIME}
 
             for iter in $(seq 1 ${ITERATIONS}); do
                 test_count=$((test_count + 1))
@@ -103,7 +103,7 @@ for bw in "${BANDWIDTHS[@]}"; do
                     continue
                 fi
 
-                sleep ${RATE_SETTLE_TIME}
+                sleep ${RATE_SLEEP_TIME}
 
                 # Capture pre-test metadata (errors non-fatal)
                 {
@@ -113,8 +113,8 @@ for bw in "${BANDWIDTHS[@]}"; do
                 } | tee -a "${test_log}"
 
                 {
-                    echo "--- Running iperf3 Test (${TEST_DURATION}s) ---"
-                    if ! iperf3 -c "${SERVER_IP}" -p "${IPERF_PORT}" -t "${TEST_DURATION}" -J --get-server-output > "${result_file}" 2>&1; then
+                    echo "--- Running iperf3 Test (${IPERF_TEST_DURATION}s) ---"
+                    if ! iperf3 -c "${SERVER_IP}" -p "${IPERF_PORT}" -t "${IPERF_TEST_DURATION}" -J --get-server-output > "${result_file}" 2>&1; then
                         echo "ERROR: iperf3 test failed"
                         log_error "iperf3 test failed: ${test_name}"
                         failed_count=$((failed_count + 1))
