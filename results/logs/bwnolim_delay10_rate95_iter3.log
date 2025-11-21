@@ -1,0 +1,21 @@
+================================================================================
+Test: bwnolim_delay10_rate95_iter3
+Kernel: tcpaad
+Timestamp: 2025-11-21T07:06:05+05:00
+Settings: BW=nolim Delay=10 Rate=95 Iter=3
+================================================================================
+
+[0;34m[INFO][0m 2025-11-21 07:06:05 - Applying tc on enp7s0: bw=nolim, delay=10
+[0;32m[SUCCESS][0m 2025-11-21 07:06:05 - Applied tc: delay=10ms (no bandwidth limit)
+--- Pre-test Metadata ---
+ssh: connect to host 192.168.1.165 port 22: No route to host
+ssh: connect to host 192.168.1.165 port 22: No route to host
+
+--- Running iperf3 Test (30s) ---
+ERROR: iperf3 test failed
+[0;31m[ERROR][0m 2025-11-21 07:06:20 - iperf3 test failed: bwnolim_delay10_rate95_iter3
+
+--- Cleanup ---
+
+Test completed at: 2025-11-21T07:06:20+05:00
+================================================================================
