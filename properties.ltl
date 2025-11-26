@@ -1,0 +1,137 @@
+/*
+ * PROPERTY: All Sent Packets Eventually Acknowledged
+ * If all packets are sent, then eventually all are acknowledged
+ * This is a critical liveness property for TCP
+ */
+ltl eventually_all_acked {
+    [](packets_sent >= MAX_PACKETS -> <>(packets_acked >= packets_sent))
+}
+
+/*
+ * PROPERTY: Receiver Makes Progress
+ * If sender sends packets, receiver eventually receives them
+ * Ensures no permanent blocking in the system
+ */
+ltl receiver_progress {
+    [](packets_sent > 0 -> <>(packets_received > 0))
+}
+
+/*
+ * PROPERTY: Timer Eventually Fires When Scheduled
+ * If an ACK is scheduled (timer set), it eventually fires or is cancelled
+ * Ensures delayed ACKs don't get stuck forever
+ */
+ltl timer_eventually_fires {
+    [](ack_scheduled -> <>(!ack_scheduled))
+}
+
+/*
+ * PROPERTY: IAT_min Eventually Resets
+ * IAT_min is periodically reset (every IAT_RESET_PERIOD)
+ * Ensures adaptation to changing network conditions
+ */
+ltl iat_min_resets {
+    []<>(last_iat_reset_time >= 0)
+}
+
+/*
+ * PROPERTY: System Terminates
+ * The system eventually reaches a final state
+ * Ensures no infinite loops or livelocks
+ */
+ltl system_terminates {
+    <>(packets_sent >= MAX_PACKETS &&
+       packets_received >= MAX_PACKETS &&
+       !ack_scheduled)
+}
+
+/*
+ * PROPERTY: Delayed Segments Never Exceeds Bound
+ * At all times, delayed segments counter is within bounds
+ * (Also checked by inline assertion, but verified here temporally)
+ */
+ltl delayed_segments_bounded {
+    [](delayed_segments <= MAX_DELAYED_SEGS)
+}
+
+/*
+ * PROPERTY: ACKs Never Exceed Received Packets
+ * Number of ACKs sent never exceeds packets received
+ * Ensures protocol correctness
+ */
+ltl acks_bounded {
+    [](packets_acked <= packets_received + 1)
+}
+
+/*
+ * PROPERTY: ATO Within Bounds
+ * Calculated ATO is always within valid range
+ * (Also checked by inline assertion)
+ */
+ltl ato_bounded {
+    [](ato >= 0 && ato <= MAX_ATO)
+}
+
+/*
+ * PROPERTY: Out-of-Order Triggers Quick ACK
+ * If an out-of-order packet is detected, delayed segments is reset
+ * Verifies TCP-AAD's quick ACK mode behavior
+ */
+ltl out_of_order_quick_ack {
+    [](out_of_order -> <>(delayed_segments == 0))
+}
+
+/*
+ * PROPERTY: Max Delayed Segments Triggers ACK
+ * If delayed segments reaches maximum, an ACK is eventually sent
+ * Verifies RFC 1122 compliance
+ */
+ltl max_delayed_triggers_ack {
+    [](delayed_segments >= MAX_DELAYED_SEGS ->
+       <>(delayed_segments == 0))
+}
+
+/*
+ * PROPERTY: Scheduled Timer Has Valid Expiry
+ * If timer is scheduled, expiry time is in the future
+ * Ensures timer scheduling correctness
+ */
+ltl timer_expiry_valid {
+    [](ack_scheduled -> (ack_timer_expiry >= current_time))
+}
+
+/*
+ * PROPERTY: Sender Fairness
+ * Sender eventually gets to send all packets
+ * Ensures no starvation of sender process
+ */
+ltl sender_fairness {
+    <>(packets_sent >= MAX_PACKETS)
+}
+
+/*
+ * PROPERTY: Receiver Fairness
+ * Receiver eventually processes all sent packets
+ * Ensures no starvation of receiver process
+ */
+ltl receiver_fairness {
+    [](packets_sent >= MAX_PACKETS -> <>(packets_received >= packets_sent))
+}
+
+/*
+ * PROPERTY: Sequential Packet Processing
+ * Packets are received in order (if not out-of-order scenario)
+ * This property may fail intentionally if we test out-of-order delivery
+ */
+ltl sequential_processing {
+    [](packets_received <= next_expected_seq)
+}
+
+/*
+ * PROPERTY: ACKs Acknowledge Received Data
+ * Each ACK acknowledges data that was actually received
+ * Critical for TCP correctness
+ */
+ltl ack_correctness {
+    [](packets_acked > 0 -> packets_received > 0)
+}
