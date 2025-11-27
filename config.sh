@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-KERNEL_TYPE=${1:-"tcpaad"} # Kernel type: "tcpaad" or "default"
+KERNEL_TYPE=${KERNEL_TYPE:-"tcpaad"} # Kernel type: "tcpaad" or "default"
 export KERNEL_TYPE
 SERVER_IP="192.168.1.165"
 SERVER_USER="rakhat"
