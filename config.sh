@@ -22,7 +22,7 @@ RATES=(34 35 36 44 45 46 94 95 96 104 105 106)
 ITERATIONS=3
 export BANDWIDTHS DELAYS RATES ITERATIONS
 SETTLE_TIME=5
-RATE_SLEEP_TIME=3  # Time to wait after setting WiFi rate for router to transition
+RATE_SLEEP_TIME=30  # Time to wait after setting WiFi rate for router to transition
 export SETTLE_TIME RATE_SLEEP_TIME
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RESULTS_DIR="${SCRIPT_DIR}/results/${KERNEL_TYPE}"
