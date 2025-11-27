@@ -109,8 +109,6 @@ for rate in "${RATES[@]}"; do
                     continue
                 fi
 
-                sleep ${RATE_SLEEP_TIME}
-
                 # Capture pre-test metadata (errors non-fatal)
                 {
                     echo "--- Pre-test Metadata ---"
