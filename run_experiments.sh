@@ -27,7 +27,7 @@ echo "Router: ${ROUTER_IP}"
 
 ensure_dir "${RESULTS_DIR}/raw"
 ensure_dir "${RESULTS_DIR}/metadata"
-ensure_dir "${LOGS_DIR}"
+ensure_dir "${RESULTS_DIR}/logs"
 
 # Verify dependencies
 log_info "Starting pre-flight checks..."
@@ -81,7 +81,7 @@ for rate in "${RATES[@]}"; do
                 test_name="rate${rate}_bw${bw}_delay${delay}_iter${iter}"
                 result_file="${RESULTS_DIR}/raw/${test_name}.json"
                 metadata_file="${RESULTS_DIR}/metadata/${test_name}.json"
-                test_log="${LOGS_DIR}/${test_name}.log"
+                test_log="${RESULTS_DIR}/logs/${test_name}.log"
 
                 # Check if test already completed
                 if [ -f "${result_file}" ] && [ -f "${metadata_file}" ] && [ -f "${test_log}" ]; then

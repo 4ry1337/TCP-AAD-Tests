@@ -1,0 +1,18 @@
+================================================================================
+Test: rate35_bw20_delay50_iter2
+Kernel: tcpaad
+Timestamp: 2025-11-27T18:08:21+05:00
+Settings: BW=20 Delay=50 Rate=35 Iter=2
+================================================================================
+
+[0;34m[INFO][0m 2025-11-27 18:08:21 - Applying tc on enp7s0: bw=20, delay=50
+[0;32m[SUCCESS][0m 2025-11-27 18:08:21 - Applied tc: bandwidth=20mb, delay=50ms
+--- Pre-test Metadata ---
+
+--- Running iperf3 Test (30s) ---
+SUCCESS: iperf3 test completed
+
+--- Cleanup ---
+
+Test completed at: 2025-11-27T18:08:57+05:00
+================================================================================

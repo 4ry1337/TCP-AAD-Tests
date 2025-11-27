@@ -1,0 +1,18 @@
+================================================================================
+Test: rate44_bwnolim_delaynodelay_iter2
+Kernel: tcpaad
+Timestamp: 2025-11-27T20:09:32+05:00
+Settings: BW=nolim Delay=nodelay Rate=44 Iter=2
+================================================================================
+
+[0;34m[INFO][0m 2025-11-27 20:09:32 - Applying tc on enp7s0: bw=nolim, delay=nodelay
+[0;32m[SUCCESS][0m 2025-11-27 20:09:32 - No tc applied (nolim bandwidth, nodelay)
+--- Pre-test Metadata ---
+
+--- Running iperf3 Test (30s) ---
+SUCCESS: iperf3 test completed
+
+--- Cleanup ---
+
+Test completed at: 2025-11-27T20:10:04+05:00
+================================================================================

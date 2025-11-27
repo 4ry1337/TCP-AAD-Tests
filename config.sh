@@ -26,8 +26,7 @@ RATE_SLEEP_TIME=30  # Time to wait after setting WiFi rate for router to transit
 export SETTLE_TIME RATE_SLEEP_TIME
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RESULTS_DIR="${SCRIPT_DIR}/results/${KERNEL_TYPE}"
-LOGS_DIR="${SCRIPT_DIR}/results/logs"
-export SCRIPT_DIR RESULTS_DIR LOGS_DIR
+export SCRIPT_DIR RESULTS_DIR
 declare -A RATE_MAP=(
     [34]="HT20-SGI-MCS4"   [35]="HT20-SGI-MCS5"   [36]="HT20-SGI-MCS6"
     [44]="HT20-SGI-MCS12"  [45]="HT20-SGI-MCS13"  [46]="HT20-SGI-MCS14"
