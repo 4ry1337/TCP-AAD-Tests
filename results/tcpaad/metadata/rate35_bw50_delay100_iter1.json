@@ -1,0 +1,12 @@
+{
+  "timestamp": "2025-11-27T18:17:42+05:00",
+  "kernel": "/home/rakhat/ghq/github.com/4ry1337/TCP-AAD-Tests/results/tcpaad/metadata/rate35_bw50_delay100_iter1.json",
+  "server_kernel_version": "6.12.9-gb9f85fb59f1f",
+  "wifi_stats": {
+    "rc_stats": "35",
+    "station_info": "Station 50:c2:e8:e9:cf:ef (on wlan0) 	inactive time:	670 ms 	rx bytes:	226524986 	rx packets:	2202167 	tx bytes:	2411144747 	tx packets:	4358518 	tx retries:	86312 	tx failed:	45 	signal:  	-20 [-30, -21] dBm 	signal avg:	-19 [-31, -19] dBm 	tx bitrate:	144.4 MBit/s MCS 15 short GI 	rx bitrate:	6.0 MBit/s 	expected throughput:	47.57Mbps 	authorized:	yes 	authenticated:	yes 	preamble:	short 	WMM/WME:	yes 	MFP:		no 	TDLS peer:	no 	connected time:	3163 seconds "
+  },
+  "tcp_stats": {
+    "ss_output": "State Recv-Q Send-Q Local Address:Port Peer Address:Port "
+  }
+}
