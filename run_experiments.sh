@@ -57,31 +57,37 @@ start_time=$(date +%s)
 log_info "Starting experiments..."
 echo ""
 
-for bw in "${BANDWIDTHS[@]}"; do
-    log_info "====== Bandwidth: ${bw}mb ======"
+for rate in "${RATES[@]}"; do
+    log_info "====== Rate: ${rate} (${RATE_MAP[$rate]}) ======"
 
-    for delay in "${DELAYS[@]}"; do
-        log_info "=== Delay: ${delay}ms ==="
+    if ! "${SCRIPT_DIR}/scripts/set_router_rate.sh" "${rate}"; then
+        log_error "Failed to set rate ${rate}, skipping this configuration"
+        continue
+    fi
 
-        for rate in "${RATES[@]}"; do
-            log_info "== Rate: ${rate} (${RATE_MAP[$rate]}) =="
+    # Wait for router to settle on new rate
+    sleep ${RATE_SLEEP_TIME}
 
-            if ! "${SCRIPT_DIR}/scripts/set_router_rate.sh" "${rate}"; then
-                log_error "Failed to set rate ${rate}, skipping this configuration"
-                continue
-            fi
+    for bw in "${BANDWIDTHS[@]}"; do
+        log_info "=== Bandwidth: ${bw}mb ==="
 
-            # Wait for router to settle on new rate
-            sleep ${RATE_SLEEP_TIME}
+        for delay in "${DELAYS[@]}"; do
+            log_info "== Delay: ${delay}ms =="
 
             for iter in $(seq 1 ${ITERATIONS}); do
                 test_count=$((test_count + 1))
 
                 # Generate filenames
-                test_name="bw${bw}_delay${delay}_rate${rate}_iter${iter}"
+                test_name="rate${rate}_bw${bw}_delay${delay}_iter${iter}"
                 result_file="${RESULTS_DIR}/raw/${test_name}.json"
                 metadata_file="${RESULTS_DIR}/metadata/${test_name}.json"
                 test_log="${LOGS_DIR}/${test_name}.log"
+
+                # Check if test already completed
+                if [ -f "${result_file}" ] && [ -f "${metadata_file}" ] && [ -f "${test_log}" ]; then
+                    log_info "Skipping ${test_name} (already completed)"
+                    continue
+                fi
 
                 # Show progress
                 show_progress ${test_count} ${TOTAL_TESTS} "${test_name}"
