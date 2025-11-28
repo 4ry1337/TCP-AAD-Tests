@@ -1,0 +1,12 @@
+{
+  "timestamp": "2025-11-28T03:05:17+05:00",
+  "kernel": "default",
+  "server_kernel_version": "6.12.9-g06ae0e5fc941",
+  "wifi_stats": {
+    "rc_stats": "35",
+    "station_info": ""
+  },
+  "tcp_stats": {
+    "ss_output": "State Recv-Q Send-Q Local Address:Port Peer Address:Port "
+  }
+}
