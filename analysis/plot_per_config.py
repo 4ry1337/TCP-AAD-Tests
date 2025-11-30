@@ -1,15 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-Per-Configuration Throughput Plots
-
-Generates time-series throughput plots for each test configuration.
-Each plot shows 3 iteration lines + average line.
-
-Usage: python plot_per_config.py <results_dir> [output_dir]
-Example: python plot_per_config.py ../results/tcpaad ../results/tcpaad/plots
-"""
-
 import json
 import sys
 import os
@@ -220,7 +210,8 @@ def plot_configuration(config_key, iterations_data, output_dir, kernel_type):
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python plot_per_config.py <results_dir> [output_dir]", file=sys.stderr)
+        print(
+            "Usage: python plot_per_config.py <results_dir> [output_dir]", file=sys.stderr)
         print("Example: python plot_per_config.py ../results/tcpaad", file=sys.stderr)
         sys.exit(1)
 
@@ -267,7 +258,7 @@ def main():
 
         try:
             plot_path = plot_configuration(config_key, iterations_data,
-                                          output_dir, kernel_type)
+                                           output_dir, kernel_type)
             plot_count += 1
 
             if plot_count % 10 == 0:
